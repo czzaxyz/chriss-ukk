@@ -63,28 +63,29 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
     
     <style>
         /* ============================================
-           LANDING PAGE CSS - LUXURY EDITION
+           LANDING PAGE CSS - WHITE & PURPLE EDITION
            ============================================ */
         :root {
-            --primary: #ff2d8e;
-            --primary-dark: #e01a78;
-            --primary-light: #ff6bb5;
-            --secondary: #7c3aed;
-            --accent: #00e5ff;
-            --dark: #0a0a0f;
-            --dark-100: #12121a;
-            --dark-200: #1a1a24;
-            --gray: #2a2a35;
-            --gray-light: #3a3a45;
-            --text: #e0e0e0;
-            --text-light: #a0a0b0;
+            --primary: #6c3bd8;
+            --primary-dark: #5a2bc0;
+            --primary-light: #8b5cf6;
+            --primary-soft: #ede8fc;
+            --secondary: #a78bfa;
+            --accent: #c4b5fd;
+            --dark: #1a1a2e;
+            --dark-100: #16213e;
+            --dark-200: #0f3460;
+            --gray: #f3f4f6;
+            --gray-light: #f9fafb;
+            --text: #374151;
+            --text-light: #6b7280;
             --white: #ffffff;
-            --gradient-primary: linear-gradient(135deg, #ff2d8e 0%, #7c3aed 100%);
-            --gradient-secondary: linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%);
-            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 8px 40px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 30px rgba(255, 45, 142, 0.3);
+            --gradient-primary: linear-gradient(135deg, #6c3bd8 0%, #8b5cf6 100%);
+            --gradient-soft: linear-gradient(135deg, #ede8fc 0%, #f5f3ff 100%);
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 40px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 30px rgba(108, 59, 216, 0.2);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -101,14 +102,13 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--dark);
+            background: var(--white);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            cursor: none;
         }
 
-        /* Custom Cursor */
+        /* Custom Cursor - Light Version */
         .cursor {
             position: fixed;
             width: 8px;
@@ -124,7 +124,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             position: fixed;
             width: 40px;
             height: 40px;
-            border: 2px solid rgba(255, 45, 142, 0.5);
+            border: 2px solid rgba(108, 59, 216, 0.3);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
@@ -138,7 +138,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark);
+            background: var(--white);
             z-index: 20000;
             display: flex;
             align-items: center;
@@ -165,14 +165,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             margin-bottom: 20px;
         }
 
-        .preloader-logo span {
-            -webkit-text-fill-color: var(--primary);
-        }
-
         .preloader-spinner {
             width: 50px;
             height: 50px;
-            border: 3px solid rgba(255, 45, 142, 0.2);
+            border: 3px solid rgba(108, 59, 216, 0.2);
             border-top-color: var(--primary);
             border-radius: 50%;
             margin: 20px auto;
@@ -183,46 +179,24 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             to { transform: rotate(360deg); }
         }
 
-        /* Video Background */
-        .hero-video-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -2;
+        /* Hero Section - Light Background */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ffffff 50%, #fae8ff 100%);
+            position: relative;
             overflow: hidden;
         }
 
-        #hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.5) contrast(1.2);
-            transform: scale(1.02);
-        }
-
-        .hero-overlay {
+        .hero-bg-pattern {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 50%, rgba(10, 10, 15, 0.3) 100%);
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236c3bd8' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
         }
-
-        .corner-accent {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            z-index: 2;
-            opacity: 0.7;
-        }
-
-        .corner-accent.top-left { top: 30px; left: 30px; border-top: 2px solid var(--primary); border-left: 2px solid var(--primary); }
-        .corner-accent.top-right { top: 30px; right: 30px; border-top: 2px solid var(--primary); border-right: 2px solid var(--primary); }
-        .corner-accent.bottom-left { bottom: 30px; left: 30px; border-bottom: 2px solid var(--primary); border-left: 2px solid var(--primary); }
-        .corner-accent.bottom-right { bottom: 30px; right: 30px; border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); }
 
         /* Navigation */
         .navbar {
@@ -233,13 +207,14 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             z-index: 1000;
             padding: 20px 0;
             transition: var(--transition);
+            background: transparent;
         }
 
         .navbar.scrolled {
-            background: rgba(10, 10, 15, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 45, 142, 0.2);
+            box-shadow: var(--shadow-sm);
         }
 
         .nav-container {
@@ -269,11 +244,15 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         .logo-text {
             font-size: 24px;
             font-weight: 700;
-            color: var(--white);
+            color: var(--dark);
             letter-spacing: 1px;
         }
 
-        .logo-text span { color: var(--primary); }
+        .logo-text span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         .nav-menu {
             display: flex;
@@ -300,10 +279,14 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         }
 
         .nav-link:hover::after,
-        .nav-link.active::after { width: 100%; }
+        .nav-link.active::after {
+            width: 100%;
+        }
 
         .nav-link:hover,
-        .nav-link.active { color: var(--white); }
+        .nav-link.active {
+            color: var(--primary);
+        }
 
         .nav-actions {
             display: flex;
@@ -316,17 +299,17 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            border: 1px solid var(--primary-light);
             border-radius: 40px;
-            color: var(--text);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
         }
 
         .btn-login:hover {
-            background: rgba(255, 45, 142, 0.1);
+            background: var(--primary);
             border-color: var(--primary);
             color: var(--white);
         }
@@ -354,12 +337,18 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s;
         }
 
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
 
         .menu-toggle {
             display: none;
@@ -371,7 +360,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         .menu-toggle span {
             width: 25px;
             height: 2px;
-            background: var(--white);
+            background: var(--dark);
             transition: var(--transition);
         }
 
@@ -383,16 +372,91 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             width: 100%;
             max-width: 400px;
             height: 100vh;
-            background: var(--dark-100);
+            background: var(--white);
             z-index: 2000;
             padding: 30px;
             transition: right 0.4s;
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow-lg);
         }
 
-        .mobile-menu.active { right: 0; }
+        .mobile-menu.active {
+            right: 0;
+        }
 
-        /* Hero Section */
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .mobile-logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-menu-close {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .mobile-menu-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-btn-login,
+        .mobile-btn-primary {
+            text-decoration: none;
+            text-align: center;
+            padding: 15px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .mobile-btn-login {
+            background: var(--gray);
+            color: var(--primary);
+        }
+
+        .mobile-btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        /* Hero Content */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -400,7 +464,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             justify-content: center;
             position: relative;
             z-index: 1;
-            padding: 100px 0;
+            padding: 120px 0 80px;
         }
 
         .hero-content {
@@ -414,14 +478,13 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 45, 142, 0.1);
-            border: 1px solid rgba(255, 45, 142, 0.3);
+            background: var(--primary-soft);
             padding: 8px 20px;
             border-radius: 40px;
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 30px;
-            backdrop-filter: blur(5px);
+            color: var(--primary);
         }
 
         .badge-pulse {
@@ -442,9 +505,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--white) 0%, var(--text) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark);
         }
 
         .gradient-text {
@@ -480,7 +541,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transition: var(--transition);
         }
 
-        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow); }
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
 
         .btn-hero-secondary {
             display: flex;
@@ -490,14 +554,14 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             background: transparent;
             border: 2px solid var(--primary);
             border-radius: 50px;
-            color: var(--white);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
         }
 
         .btn-hero-secondary:hover {
-            background: rgba(255, 45, 142, 0.1);
+            background: var(--primary-soft);
             transform: translateY(-3px);
         }
 
@@ -507,9 +571,20 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             gap: 60px;
         }
 
-        .hero-stat { text-align: center; }
-        .stat-number { font-size: 28px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat-label { font-size: 14px; color: var(--text-light); }
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero-stat .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
 
         .scroll-indicator {
             position: absolute;
@@ -519,6 +594,64 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             text-align: center;
         }
 
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid var(--text-light);
+            border-radius: 20px;
+            margin: 0 auto 10px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+        }
+
+        .scroll-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        /* Marquee Banner */
+        .marquee {
+            background: var(--primary-soft);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-content span {
+            display: inline-block;
+            margin: 0 30px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* Container */
         .container {
             max-width: 1400px;
@@ -526,7 +659,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             padding: 0 40px;
         }
 
-        section { padding: 100px 0; position: relative; }
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
 
         .section-header {
             text-align: center;
@@ -546,6 +682,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 20px;
+            color: var(--dark);
         }
 
         .section-subtitle {
@@ -556,7 +693,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         }
 
         /* Stats Section */
-        .stats-section { background: var(--dark-100); }
+        .stats-section {
+            background: var(--gray-light);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -564,24 +704,38 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--white);
             border-radius: 20px;
             padding: 40px 20px;
             text-align: center;
             transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            border-color: var(--primary);
             box-shadow: var(--shadow-glow);
         }
 
-        .stat-icon { font-size: 40px; color: var(--primary); margin-bottom: 20px; }
-        .stat-value { font-size: 36px; font-weight: 700; margin-bottom: 10px; }
-        .stat-value span { font-size: 14px; font-weight: 400; color: var(--text-light); }
-        .stat-label { font-size: 14px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         /* Features Section */
         .features-grid {
@@ -591,13 +745,12 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--white);
             border-radius: 20px;
             padding: 40px 30px;
             transition: var(--transition);
             position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .feature-card::before {
@@ -607,26 +760,38 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255, 45, 142, 0.05), rgba(124, 58, 237, 0.05));
+            background: var(--gradient-soft);
             opacity: 0;
             transition: var(--transition);
+            border-radius: 20px;
+            z-index: -1;
         }
 
-        .feature-card:hover::before { opacity: 1; }
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
         .feature-card:hover {
             transform: translateY(-10px);
-            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
         }
 
         .feature-icon {
-            position: relative;
             font-size: 48px;
             color: var(--primary);
             margin-bottom: 25px;
         }
 
-        .feature-card h3 { font-size: 24px; margin-bottom: 15px; }
-        .feature-card p { color: var(--text-light); margin-bottom: 20px; }
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
 
         .feature-link {
             display: inline-flex;
@@ -639,69 +804,25 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             cursor: pointer;
         }
 
-        .feature-link:hover { gap: 12px; }
-
-        /* Showcase Section */
-        .showcase-section {
-            background: var(--dark-100);
-            position: relative;
-            overflow: hidden;
+        .feature-link:hover {
+            gap: 12px;
         }
 
-        .showcase-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+        /* Models Section */
+        .models-section {
+            background: var(--gray-light);
         }
-
-        .showcase-text h2 { font-size: 42px; margin: 20px 0; }
-        .showcase-text p { color: var(--text-light); margin-bottom: 30px; }
-
-        .showcase-list {
-            list-style: none;
-            margin-bottom: 40px;
-        }
-
-        .showcase-list li {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .showcase-list i { color: var(--primary); }
-
-        .showcase-image {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .image-wrapper:hover img { transform: scale(1.05); }
-
-        /* Models Slider Section */
-        .models-section { background: var(--dark); }
 
         .model-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--white);
             border-radius: 24px;
             overflow: hidden;
             transition: var(--transition);
-            position: relative;
+            box-shadow: var(--shadow-sm);
         }
 
         .model-card:hover {
             transform: translateY(-10px);
-            border-color: var(--primary);
             box-shadow: var(--shadow-glow);
         }
 
@@ -715,6 +836,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             font-size: 12px;
             font-weight: 600;
             z-index: 1;
+            color: var(--white);
         }
 
         .model-image {
@@ -729,11 +851,25 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transition: var(--transition);
         }
 
-        .model-card:hover .model-image img { transform: scale(1.1); }
+        .model-card:hover .model-image img {
+            transform: scale(1.1);
+        }
 
-        .model-info { padding: 25px; }
-        .model-info h3 { font-size: 22px; margin-bottom: 10px; }
-        .model-desc { color: var(--text-light); font-size: 14px; margin-bottom: 20px; }
+        .model-info {
+            padding: 25px;
+        }
+
+        .model-info h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .model-desc {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
         .model-specs {
             display: flex;
@@ -742,13 +878,21 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             flex-wrap: wrap;
         }
 
-        .model-specs span { font-size: 12px; color: var(--text-light); }
-        .model-specs i { color: var(--primary); margin-right: 5px; }
+        .model-specs span {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .model-specs i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
 
         .model-price {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 20px;
+            color: var(--primary);
         }
 
         .model-price span {
@@ -765,7 +909,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             background: transparent;
             border: 1px solid var(--primary);
             border-radius: 40px;
-            color: var(--white);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
@@ -773,6 +917,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
 
         .btn-model:hover {
             background: var(--primary);
+            color: var(--white);
             gap: 12px;
         }
 
@@ -780,13 +925,25 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         .swiper-button-next,
         .swiper-button-prev {
             color: var(--primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--white);
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            box-shadow: var(--shadow-sm);
         }
 
-        .swiper-pagination-bullet-active { background: var(--primary); }
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 18px;
+        }
+
+        .swiper-pagination-bullet {
+            background: var(--text-light);
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--primary);
+        }
 
         /* Testimonials Section */
         .testimonials-grid {
@@ -796,20 +953,31 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--white);
             border-radius: 20px;
             padding: 30px;
             transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
 
         .testimonial-card:hover {
             transform: translateY(-10px);
-            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
         }
 
-        .testimonial-quote { font-size: 32px; color: var(--primary); margin-bottom: 20px; opacity: 0.5; }
-        .testimonial-text { font-size: 16px; margin-bottom: 25px; line-height: 1.7; }
+        .testimonial-quote {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: var(--text);
+        }
 
         .testimonial-author {
             display: flex;
@@ -824,14 +992,20 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             object-fit: cover;
         }
 
-        .author-info h4 { font-size: 16px; margin-bottom: 5px; }
-        .author-rating i { color: #ffd700; font-size: 12px; }
+        .author-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .author-rating i {
+            color: #fbbf24;
+            font-size: 12px;
+        }
 
         /* CTA Section */
         .cta-section {
-            background: var(--dark-100);
-            position: relative;
-            overflow: hidden;
+            background: var(--gradient-soft);
         }
 
         .cta-content {
@@ -840,8 +1014,17 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             margin: 0 auto;
         }
 
-        .cta-content h2 { font-size: 48px; margin-bottom: 20px; }
-        .cta-content p { font-size: 18px; color: var(--text-light); margin-bottom: 40px; }
+        .cta-content h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
 
         .cta-buttons {
             display: flex;
@@ -874,17 +1057,27 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         .btn-cta-secondary {
             background: transparent;
             border: 2px solid var(--primary);
-            color: var(--white);
+            color: var(--primary);
         }
 
         .btn-cta-secondary:hover {
-            background: rgba(255, 45, 142, 0.1);
+            background: var(--primary-soft);
             transform: translateY(-3px);
         }
 
         /* Partners Section */
-        .partners-section { padding: 60px 0; }
-        .partners-title { text-align: center; font-size: 14px; letter-spacing: 2px; color: var(--text-light); margin-bottom: 40px; }
+        .partners-section {
+            padding: 60px 0;
+            background: var(--white);
+        }
+
+        .partners-title {
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
 
         .partners-grid {
             display: flex;
@@ -901,17 +1094,16 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transition: var(--transition);
         }
 
-        .partner-logo span { color: var(--primary); }
         .partner-logo:hover {
-            color: var(--white);
+            color: var(--primary);
             transform: scale(1.1);
         }
 
         /* Footer */
         .footer {
-            background: var(--dark-100);
+            background: var(--dark);
             padding: 80px 0 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
         }
 
         .footer-content {
@@ -930,7 +1122,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             margin-bottom: 20px;
         }
 
-        .footer-brand p { color: var(--text-light); margin-bottom: 25px; }
+        .footer-brand p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
 
         .social-links {
             display: flex;
@@ -945,7 +1140,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             justify-content: center;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
-            color: var(--text);
+            color: var(--gray);
             transition: var(--transition);
         }
 
@@ -955,9 +1150,20 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transform: translateY(-3px);
         }
 
-        .footer-links h4 { font-size: 18px; margin-bottom: 25px; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
+        .footer-links h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
         .footer-links a {
             text-decoration: none;
             color: var(--text-light);
@@ -970,8 +1176,16 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             display: inline-block;
         }
 
-        .footer-newsletter h4 { font-size: 18px; margin-bottom: 15px; }
-        .footer-newsletter p { color: var(--text-light); margin-bottom: 20px; }
+        .footer-newsletter h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .footer-newsletter p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
 
         .newsletter-form {
             display: flex;
@@ -989,7 +1203,10 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transition: var(--transition);
         }
 
-        .newsletter-form input:focus { border-color: var(--primary); }
+        .newsletter-form input:focus {
+            border-color: var(--primary);
+        }
+
         .newsletter-form button {
             width: 44px;
             height: 44px;
@@ -1001,7 +1218,9 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             transition: var(--transition);
         }
 
-        .newsletter-form button:hover { transform: scale(1.1); }
+        .newsletter-form button:hover {
+            transform: scale(1.1);
+        }
 
         .footer-bottom {
             text-align: center;
@@ -1025,8 +1244,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             .nav-menu { display: none; }
             .menu-toggle { display: flex; }
             .hero-title { font-size: 48px; }
-            .showcase-content { grid-template-columns: 1fr; text-align: center; }
-            .showcase-list li { justify-content: center; }
             .hero-stats { flex-wrap: wrap; gap: 30px; }
             .container { padding: 0 20px; }
         }
@@ -1040,7 +1257,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             .footer-content { grid-template-columns: 1fr; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .cta-buttons { flex-direction: column; align-items: center; }
-            .corner-accent { display: none; }
             .cursor, .cursor-follower { display: none; }
             body { cursor: auto; }
             .nav-actions .btn-login,
@@ -1054,8 +1270,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             .stat-value { font-size: 28px; }
             .model-price { font-size: 22px; }
         }
-
-        .d-none { display: none !important; }
     </style>
 </head>
 <body>
@@ -1064,133 +1278,122 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         <div class="preloader-content">
             <div class="preloader-logo">M<span>R</span></div>
             <div class="preloader-spinner"></div>
-            <p>Experience Luxury</p>
+            <p style="color: #6c3bd8;">Experience Luxury</p>
         </div>
     </div>
 
-    <!-- Cursor Custom -->
+    <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Video Background Container -->
-    <div class="hero-video-wrapper">
-        <video id="hero-video" autoplay muted loop playsinline>
-            <source src="../../../storages/video/motor.mp4" type="video/mp4">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-motorcycle-driving-fast-on-the-road-3454-large.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        
-        <!-- Corner Accents -->
-        <div class="corner-accent top-left"></div>
-        <div class="corner-accent top-right"></div>
-        <div class="corner-accent bottom-left"></div>
-        <div class="corner-accent bottom-right"></div>
-    </div>
+    <!-- Hero Section with Light Background -->
+    <div class="hero-section">
+        <div class="hero-bg-pattern"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <span class="logo-icon">M</span>
-                <span class="logo-text">o<span>To</span>R</span>
-                <span class="logo-dot"></span>
-            </a>
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <span class="logo-icon">M</span>
+                    <span class="logo-text">o<span>To</span>R</span>
+                </a>
+                
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#models" class="nav-link">Models</a>
+                    <a href="#reviews" class="nav-link">Reviews</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <a href="../../../pages/auth/login.php" class="btn-login">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="../../../pages/auth/login.php" class="btn-primary">
+                        <span>Get Started</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="menu-toggle" id="menuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <div class="mobile-logo">M<span>R</span></div>
+                <div class="mobile-menu-close" id="menuClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="mobile-menu-links">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#features" class="mobile-nav-link">Features</a>
+                <a href="#models" class="mobile-nav-link">Models</a>
+                <a href="#reviews" class="mobile-nav-link">Reviews</a>
+                <a href="#about" class="mobile-nav-link">About</a>
+            </div>
+            <div class="mobile-menu-footer">
+                <a href="../../../pages/auth/login.php" class="mobile-btn-login">Sign In</a>
+                <a href="../../../pages/auth/login.php" class="mobile-btn-primary">Get Started</a>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">
+                    <span class="badge-pulse"></span>
+                    Limited Edition 2025
+                </div>
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+                    Upgrade Your<br>
+                    <span class="gradient-text">Ride Today.</span>
+                </h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="300">
+                    Experience the pinnacle of electric mobility with MoToR's latest innovation. 
+                    Unmatched performance, timeless design, and sustainable power.
+                </p>
+                <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
+                    <a href="../../../pages/auth/login.php" class="btn-hero-primary">
+                        <span>Start Your Journey</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#features" class="btn-hero-secondary">
+                        <i class="fas fa-play"></i>
+                        <span>Explore Features</span>
+                    </a>
+                </div>
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
+                    <div class="hero-stat">
+                        <div class="stat-number">0-60</div>
+                        <div class="stat-label">in 3.2 sec</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">km range</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-number">4.5★</div>
+                        <div class="stat-label">rating</div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="nav-menu">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#models" class="nav-link">Models</a>
-                <a href="#reviews" class="nav-link">Reviews</a>
-                <a href="#about" class="nav-link">About</a>
-            </div>
-            
-            <div class="nav-actions">
-                <a href="../../../pages/auth/login.php" class="btn-login">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Sign In</span>
-                </a>
-                <a href="../../../pages/auth/login.php" class="btn-primary">
-                    <span>Get Started</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <div class="menu-toggle" id="menuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
                 </div>
+                <div class="scroll-text">Scroll to explore</div>
             </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <div class="mobile-logo">M<span>R</span></div>
-            <div class="mobile-menu-close" id="menuClose">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="mobile-menu-links">
-            <a href="#home" class="mobile-nav-link">Home</a>
-            <a href="#features" class="mobile-nav-link">Features</a>
-            <a href="#models" class="mobile-nav-link">Models</a>
-            <a href="#reviews" class="mobile-nav-link">Reviews</a>
-            <a href="#about" class="mobile-nav-link">About</a>
-        </div>
-        <div class="mobile-menu-footer">
-            <a href="../../../pages/auth/login.php" class="mobile-btn-login">Sign In</a>
-            <a href="../../../pages/auth/login.php" class="mobile-btn-primary">Get Started</a>
-        </div>
+        </section>
     </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">
-                <span class="badge-pulse"></span>
-                Limited Edition 2025
-            </div>
-            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
-                Upgrade Your<br>
-                <span class="gradient-text">Ride Today.</span>
-            </h1>
-            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="300">
-                Experience the pinnacle of electric mobility with MoToR's latest innovation. 
-                Unmatched performance, timeless design, and sustainable power.
-            </p>
-            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
-                <a href="../../../pages/auth/login.php" class="btn-hero-primary">
-                    <span>Start Your Journey</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="#features" class="btn-hero-secondary">
-                    <i class="fas fa-play"></i>
-                    <span>Explore Features</span>
-                </a>
-            </div>
-            <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
-                <div class="hero-stat">
-                    <div class="stat-number">0-60</div>
-                    <div class="stat-label">in 3.2 sec</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="stat-number">200+</div>
-                    <div class="stat-label">km range</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="stat-number">4.5★</div>
-                    <div class="stat-label">rating</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
-            </div>
-            <div class="scroll-text">Scroll to explore</div>
-        </div>
-    </section>
 
     <!-- Marquee Banner -->
     <div class="marquee">
@@ -1220,28 +1423,28 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                     <div class="stat-icon">
                         <i class="fas fa-motorcycle"></i>
                     </div>
-                    <div class="stat-value"><?php echo number_format($stats['total_motor'] ?? 0); ?><span></span></div>
+                    <div class="stat-value"><?php echo number_format($stats['total_motor'] ?? 0); ?></div>
                     <div class="stat-label">Total Motor</div>
                 </div>
                 <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
-                    <div class="stat-value"><?php echo number_format($stats['tersedia'] ?? 0); ?><span></span></div>
+                    <div class="stat-value"><?php echo number_format($stats['tersedia'] ?? 0); ?></div>
                     <div class="stat-label">Tersedia</div>
                 </div>
                 <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-icon">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <div class="stat-value"><?php echo number_format($stats['dipinjam'] ?? 0); ?><span></span></div>
+                    <div class="stat-value"><?php echo number_format($stats['dipinjam'] ?? 0); ?></div>
                     <div class="stat-label">Sedang Dipinjam</div>
                 </div>
                 <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="stat-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="stat-value">1K+<span></span></div>
+                    <div class="stat-value">1K+</div>
                     <div class="stat-label">Happy Riders</div>
                 </div>
             </div>
@@ -1261,7 +1464,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>Easy Booking</h3>
                     <p>Quick and seamless booking process with just a few clicks. Rent your dream motorcycle instantly.</p>
@@ -1271,7 +1473,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>Full Insurance</h3>
                     <p>Every rental comes with comprehensive insurance coverage for your peace of mind.</p>
@@ -1281,7 +1482,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>24/7 Support</h3>
                     <p>Our dedicated support team is available around the clock to assist you.</p>
@@ -1291,7 +1491,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-icon">
                         <i class="fas fa-map-marked-alt"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>Free Delivery</h3>
                     <p>Free delivery and pickup service within the city area for all rentals.</p>
@@ -1301,7 +1500,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="feature-icon">
                         <i class="fas fa-wrench"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>Well Maintained</h3>
                     <p>All motorcycles are regularly serviced and maintained to the highest standards.</p>
@@ -1311,7 +1509,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="feature-icon">
                         <i class="fas fa-tag"></i>
-                        <div class="icon-glow"></div>
                     </div>
                     <h3>Best Price</h3>
                     <p>Competitive pricing with special discounts for long-term rentals.</p>
@@ -1321,7 +1518,7 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
         </div>
     </section>
 
-    <!-- Models Slider Section - Data dari Database -->
+    <!-- Models Slider Section -->
     <section class="models-section" id="models">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
@@ -1454,7 +1651,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
 
     <!-- CTA Section -->
     <section class="cta-section">
-        <div class="cta-bg"></div>
         <div class="container">
             <div class="cta-content" data-aos="zoom-in">
                 <h2>Ready to <span class="gradient-text">Start Your Journey?</span></h2>
@@ -1571,12 +1767,12 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                 el.addEventListener('mouseenter', () => {
                     cursor.style.transform = 'scale(2)';
                     cursorFollower.style.transform = 'scale(1.5)';
-                    cursorFollower.style.borderColor = 'rgba(255, 45, 142, 0.8)';
+                    cursorFollower.style.borderColor = 'rgba(108, 59, 216, 0.8)';
                 });
                 el.addEventListener('mouseleave', () => {
                     cursor.style.transform = 'scale(1)';
                     cursorFollower.style.transform = 'scale(1)';
-                    cursorFollower.style.borderColor = 'rgba(255, 45, 142, 0.5)';
+                    cursorFollower.style.borderColor = 'rgba(108, 59, 216, 0.3)';
                 });
             });
         }
@@ -1664,15 +1860,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
             },
         });
 
-        // Video Background Parallax
-        const videoWrapper = document.querySelector('.hero-video-wrapper');
-        if (videoWrapper) {
-            window.addEventListener('scroll', () => {
-                const scrolled = window.scrollY;
-                videoWrapper.style.transform = `translateY(${scrolled * 0.3}px)`;
-            });
-        }
-
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1700,12 +1887,6 @@ if ($resultKategori && mysqli_num_rows($resultKategori) > 0) {
                     newsletterForm.querySelector('input').value = '';
                 }
             });
-        }
-
-        // Video Play Attempt
-        const video = document.getElementById('hero-video');
-        if (video) {
-            video.play().catch(e => console.log('Autoplay prevented:', e));
         }
 
         // Scroll Indicator Fade
