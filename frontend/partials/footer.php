@@ -70,12 +70,4 @@
         </div><!--- END ROW -->
     </div><!--- END CONTAINER -->
 </div>
-<!-- END FOOTER -->
-
-<!-- START FOOTER COPYRIGHT -->
-<div class="foot_copy">
-    <div class="footer_copyright">
-        <p>&copy; <?= date('Y') ?> Sistem Peminjaman Motor. All Rights Reserved.</p>
-    </div>
-</div>
 <!-- END FOOTER COPYRIGHT -->

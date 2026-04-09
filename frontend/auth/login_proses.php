@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../app.php'; // Path ke app.php di root
+include '../../config/koneksi.php'; // Path ke app.php di root
 
 // Validasi method POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {

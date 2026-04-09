@@ -91,6 +91,19 @@
           </a>
         </li>
 
+        <!-- Data User -->
+        <li class="mt-0.5 w-full">
+          <a
+            class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors <?= ($page == 'contact') ? 'bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl text-white' : 'bg-white text-slate-700' ?>"
+            href="../../pages/contact/index.php">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5 <?= ($page == 'contact') ? 'bg-white/20' : 'bg-white shadow-soft-2xl' ?>">
+              <i class="fas fa-address-book <?= ($page == 'contact') ? 'text-white' : 'text-slate-700' ?>" style="font-size: 1rem;"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Contact</span>
+          </a>
+        </li>
+
         <!-- User Management -->
         <li class="w-full mt-4">
           <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60 text-slate-500">

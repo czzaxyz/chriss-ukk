@@ -4,51 +4,55 @@ ini_set('display_errors', 1);
 session_start();
 
 include '../../partials/header.php';
-$page = 'pengembalian';
+$page = 'contact';
 include '../../partials/sidebar.php';
 include '../../app.php';
 
+// HAPUS bagian ini dari index.php (pindahkan ke file terpisah)
+// if (isset($_GET['verify']) && isset($_GET['id'])) { ... }
+
 // =============================================
-// DATA PENGEMBALIAN - PAGINATION & SEARCH
+// CONTACT / INBOX - PAGINATION & SEARCH
 // =============================================
 
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $page_current = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page_current - 1) * $limit;
 $search = isset($_GET['search']) ? mysqli_real_escape_string($connect, $_GET['search']) : '';
+$filter_status = isset($_GET['status']) ? mysqli_real_escape_string($connect, $_GET['status']) : '';
 
-// Query search
-$where_conditions = ["p.status = 'selesai'"];
+// Query search & filter
+$where_conditions = [];
 if (!empty($search)) {
-    $where_conditions[] = "(p.kode_peminjaman LIKE '%$search%' 
-                         OR u.username LIKE '%$search%' 
-                         OR u.nama_lengkap LIKE '%$search%'
-                         OR b.nama_barang LIKE '%$search%')";
+    $where_conditions[] = "(name LIKE '%$search%' OR email LIKE '%$search%' OR subject LIKE '%$search%' OR message LIKE '%$search%')";
 }
-$where_sql = "WHERE " . implode(" AND ", $where_conditions);
+if (!empty($filter_status)) {
+    $where_conditions[] = "status = '$filter_status'";
+}
+$where_sql = !empty($where_conditions) ? "WHERE " . implode(" AND ", $where_conditions) : "";
 
 // Query total data
-$q_total = mysqli_query($connect, "SELECT COUNT(*) as total 
-    FROM peminjaman p
-    LEFT JOIN users u ON p.user_id = u.id 
-    LEFT JOIN barang b ON p.barang_id = b.id 
-    $where_sql");
+$q_total = mysqli_query($connect, "SELECT COUNT(*) as total FROM contacts $where_sql");
 $total_data = mysqli_fetch_assoc($q_total)['total'];
 $total_pages = ceil($total_data / $limit);
 
-// Query data pengembalian
-$q_pengembalian = mysqli_query($connect, "SELECT p.*, u.username, u.nama_lengkap, b.nama_barang, b.kode_barang
-    FROM peminjaman p
-    LEFT JOIN users u ON p.user_id = u.id 
-    LEFT JOIN barang b ON p.barang_id = b.id 
+// Query data contacts
+$q_contacts = mysqli_query($connect, "SELECT * FROM contacts 
     $where_sql
-    ORDER BY p.tgl_pengembalian_input DESC 
+    ORDER BY id DESC 
     LIMIT $offset, $limit");
+
+// Ambil daftar status untuk filter
+$q_status = mysqli_query($connect, "SELECT DISTINCT status FROM contacts ORDER BY status");
+$statuses = [];
+while ($row = mysqli_fetch_assoc($q_status)) {
+    $statuses[] = $row['status'];
+}
 ?>
 
 <style>
 /* ============================================
-   DATA PENGEMBALIAN STYLE
+   CONTACT / INBOX STYLE
    ============================================ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -132,6 +136,21 @@ body {
     cursor: pointer;
 }
 
+.filter-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-status select {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
 .search-box {
     display: flex;
     align-items: center;
@@ -162,14 +181,14 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-.table-pengembalian {
+.table-contact {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
-    min-width: 1100px;
+    min-width: 1000px;
 }
 
-.table-pengembalian thead th {
+.table-contact thead th {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 14px 16px;
@@ -180,25 +199,31 @@ body {
     text-align: left;
 }
 
-.table-pengembalian thead th:first-child {
+.table-contact thead th:first-child {
     border-radius: 12px 0 0 0;
 }
 
-.table-pengembalian thead th:last-child {
+.table-contact thead th:last-child {
     border-radius: 0 12px 0 0;
 }
 
-.table-pengembalian tbody td {
+.table-contact tbody td {
     padding: 14px 16px;
     border-bottom: 1px solid #f0f2f5;
     vertical-align: middle;
     color: #4a5568;
 }
 
-.table-pengembalian tbody tr:hover {
+.table-contact tbody tr:hover {
     background: #f8f9ff;
 }
 
+/* SEMUA BARIS BACKGROUND PUTIH */
+.table-contact tbody tr {
+    background: white;
+}
+
+/* Status Badge */
 .status-badge {
     padding: 4px 12px;
     border-radius: 20px;
@@ -207,40 +232,38 @@ body {
     display: inline-block;
 }
 
-.status-selesai {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.kondisi-badge {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.kondisi-baik {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.kondisi-rusak-ringan {
+.status-unread {
     background: #fef3c7;
     color: #92400e;
 }
 
-.kondisi-rusak-berat {
-    background: #fee2e2;
-    color: #991b1b;
+.status-read {
+    background: #dbeafe;
+    color: #1e40af;
 }
 
+.status-replied {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+/* Message Preview */
+.message-preview {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #718096;
+}
+
+/* Action Buttons */
 .action-buttons {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
-.btn-detail {
+.btn-view {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     padding: 5px 10px;
@@ -253,12 +276,52 @@ body {
     transition: all 0.2s;
 }
 
-.btn-detail:hover {
+.btn-verify-read {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-verify-replied {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ff5858 0%, #f09819 100%);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-view:hover, .btn-verify-read:hover, .btn-verify-replied:hover, .btn-delete:hover {
     transform: translateY(-2px);
     opacity: 0.9;
     color: white;
 }
 
+/* Pagination */
 .pagination-info {
     display: flex;
     justify-content: space-between;
@@ -354,16 +417,19 @@ body {
         flex-direction: column;
         text-align: center;
     }
+    .message-preview {
+        max-width: 150px;
+    }
     .action-buttons {
         flex-direction: column;
-        gap: 5px;
+        align-items: center;
     }
 }
 </style>
 
 <div id="main">
     <div class="page-header">
-        <h2><i class="fas fa-undo-alt me-2"></i> Data Pengembalian</h2>
+        <h2><i class="fas fa-envelope me-2"></i> Pesan Masuk (Inbox)</h2>
     </div>
 
     <?php if (isset($_SESSION['success'])): ?>
@@ -384,70 +450,85 @@ body {
             </select>
             <span>data</span>
         </div>
+        <div class="filter-status">
+            <label>Filter Status:</label>
+            <select id="status-filter">
+                <option value="">Semua Status</option>
+                <?php foreach ($statuses as $status): ?>
+                    <option value="<?= htmlspecialchars($status) ?>" <?= $filter_status == $status ? 'selected' : '' ?>>
+                        <?= ucfirst($status) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
         <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" id="search-input" placeholder="Cari pengembalian..." value="<?= htmlspecialchars($search) ?>">
+            <input type="text" id="search-input" placeholder="Cari nama, email, atau subjek..." value="<?= htmlspecialchars($search) ?>">
         </div>
     </div>
 
     <div class="table-container">
-        <table class="table-pengembalian">
+        <table class="table-contact">
             <thead>
                 <tr>
                     <th>NO</th>
-                    <th>KODE PEMINJAMAN</th>
-                    <th>PEMINJAM</th>
-                    <th>MOTOR</th>
-                    <th>TGL PINJAM</th>
-                    <th>TGL KEMBALI</th>
-                    <th>LAMA</th>
-                    <th>KONDISI</th>
-                    <th>TOTAL HARGA</th>
-                    <th>DENDA</th>
-                    <th>TOTAL BAYAR</th>
-                    <th>TGL KEMBALI INPUT</th>
+                    <th>NAMA</th>
+                    <th>EMAIL</th>
+                    <th>SUBJEK</th>
+                    <th>PESAN</th>
+                    <th>STATUS</th>
+                    <th>TANGGAL</th>
                     <th>AKSI</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (mysqli_num_rows($q_pengembalian) > 0): ?>
-                    <?php $no = $offset + 1; while ($row = mysqli_fetch_assoc($q_pengembalian)): 
-                        $kondisi_class = '';
-                        switch ($row['kondisi']) {
-                            case 'baik': $kondisi_class = 'kondisi-baik'; break;
-                            case 'rusak_ringan': $kondisi_class = 'kondisi-rusak-ringan'; break;
-                            case 'rusak_berat': $kondisi_class = 'kondisi-rusak-berat'; break;
-                            default: $kondisi_class = 'kondisi-baik';
-                        }
-                        $total_bayar = ($row['total_harga'] ?? 0) + ($row['denda'] ?? 0);
+                <?php if (mysqli_num_rows($q_contacts) > 0): ?>
+                    <?php
+                    $no = $offset + 1;
+                    while ($row = mysqli_fetch_assoc($q_contacts)):
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
-                            <td><strong><?= htmlspecialchars($row['kode_peminjaman']) ?></strong></td>
-                            <td><?= htmlspecialchars($row['username']) ?><br><small class="text-muted"><?= htmlspecialchars($row['nama_lengkap']) ?></small></td>
-                            <td><?= htmlspecialchars($row['nama_barang']) ?><br><small class="text-muted"><?= htmlspecialchars($row['kode_barang']) ?></small></td>
-                            <td><?= date('d/m/Y', strtotime($row['tgl_pinjam'])) ?></td>
-                            <td><?= date('d/m/Y', strtotime($row['tgl_kembali_rencana'])) ?></td>
-                            <td><?= $row['lama_pinjam'] ?> hari</small></td>
-                            <td><span class="kondisi-badge <?= $kondisi_class ?>"><?= str_replace('_', ' ', ucfirst($row['kondisi'])) ?></span></td>
-                            <td>Rp <?= number_format($row['total_harga'] ?? 0, 0, ',', '.') ?></td>
-                            <td>Rp <?= number_format($row['denda'] ?? 0, 0, ',', '.') ?></td>
-                            <td><strong class="text-success">Rp <?= number_format($total_bayar, 0, ',', '.') ?></strong></td>
-                            <td><?= $row['tgl_pengembalian_input'] ? date('d/m/Y H:i', strtotime($row['tgl_pengembalian_input'])) : '-' ?></td>
+                            <td><strong><?= htmlspecialchars($row['name']) ?></strong></td>
+                            <td><?= htmlspecialchars($row['email']) ?></td>
+                            <td><?= htmlspecialchars($row['subject']) ?></td>
+                            <td class="message-preview"><?= htmlspecialchars(substr($row['message'], 0, 50)) ?>...</td>
+                            <td>
+                                <span class="status-badge status-<?= $row['status'] ?>">
+                                    <?= ucfirst($row['status']) ?>
+                                </span>
+                            </td>
+                            <td><?= date('d/m/Y H:i', strtotime($row['created_at'])) ?></td>
                             <td class="action-buttons">
-                                <a href="detail.php?id=<?= $row['id'] ?>" class="btn-detail" title="Detail">
-                                    <i class="fas fa-eye"></i>
+                                <?php if ($row['status'] != 'read'): ?>
+                                <a href="../../action/contact/update_status.php?verify=read&id=<?= $row['id'] ?>" 
+                                   onclick="return confirm('Tandai pesan ini sebagai sudah dibaca?')"
+                                   class="btn-verify-read" title="Tandai Dibaca">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>
+                                <?php endif; ?>
+                                <?php if ($row['status'] != 'replied'): ?>
+                                <a href="../../action/contact/update_status.php?verify=replied&id=<?= $row['id'] ?>" 
+                                   onclick="return confirm('Tandai pesan ini sebagai sudah dibalas?')"
+                                   class="btn-verify-replied" title="Tandai Dibalas">
+                                    <i class="fas fa-reply-all"></i> 
+                                </a>
+                                <?php endif; ?>
+                                <a href="../../action/contact/destroy.php?id=<?= $row['id'] ?>" 
+                                   onclick="return confirm('Hapus pesan dari <?= addslashes($row['name']) ?>?')"
+                                   class="btn-delete" title="Hapus">
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="13">
+                        <td colspan="8">
                             <div class="empty-state">
-                                <i class="fas fa-undo-alt"></i>
-                                <h4>Belum Ada Data Pengembalian</h4>
-                                <p>Belum ada peminjaman yang dikembalikan</p>
+                                <i class="fas fa-envelope-open-text"></i>
+                                <h4>Belum Ada Pesan Masuk</h4>
+                                <p>Belum ada pesan yang masuk ke inbox</p>
                             </div>
                         </td>
                     </tr>
@@ -459,11 +540,11 @@ body {
     <?php if ($total_data > 0): ?>
     <div class="pagination-info">
         <div class="data-info">
-            Menampilkan <?= min($offset + 1, $total_data) ?> sampai <?= min($offset + $limit, $total_data) ?> dari <?= $total_data ?> data
+            Menampilkan <?= min($offset + 1, $total_data) ?> sampai <?= min($offset + $limit, $total_data) ?> dari <?= $total_data ?> pesan
         </div>
         <div class="pagination">
             <?php if ($page_current > 1): ?>
-                <a href="?page=<?= $page_current - 1 ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>" class="page-link">&laquo; Sebelumnya</a>
+                <a href="?page=<?= $page_current - 1 ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($filter_status) ?>" class="page-link">&laquo; Sebelumnya</a>
             <?php endif; ?>
 
             <?php
@@ -471,25 +552,25 @@ body {
             $end_page = min($total_pages, $page_current + 2);
 
             if ($start_page > 1): ?>
-                <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>" class="page-link">1</a>
+                <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($filter_status) ?>" class="page-link">1</a>
                 <?php if ($start_page > 2): ?>
                     <span class="page-dots">...</span>
                 <?php endif; ?>
             <?php endif; ?>
 
             <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
-                <a href="?page=<?= $i ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>" class="page-link <?= $i == $page_current ? 'active' : '' ?>"><?= $i ?></a>
+                <a href="?page=<?= $i ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($filter_status) ?>" class="page-link <?= $i == $page_current ? 'active' : '' ?>"><?= $i ?></a>
             <?php endfor; ?>
 
             <?php if ($end_page < $total_pages): ?>
                 <?php if ($end_page < $total_pages - 1): ?>
                     <span class="page-dots">...</span>
                 <?php endif; ?>
-                <a href="?page=<?= $total_pages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>" class="page-link"><?= $total_pages ?></a>
+                <a href="?page=<?= $total_pages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($filter_status) ?>" class="page-link"><?= $total_pages ?></a>
             <?php endif; ?>
 
             <?php if ($page_current < $total_pages): ?>
-                <a href="?page=<?= $page_current + 1 ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>" class="page-link">Selanjutnya &raquo;</a>
+                <a href="?page=<?= $page_current + 1 ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($filter_status) ?>" class="page-link">Selanjutnya &raquo;</a>
             <?php endif; ?>
         </div>
     </div>
@@ -504,13 +585,27 @@ body {
         window.location.href = '?' + urlParams.toString();
     });
 
+    document.getElementById('status-filter')?.addEventListener('change', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (this.value) {
+            urlParams.set('status', this.value);
+        } else {
+            urlParams.delete('status');
+        }
+        urlParams.set('page', 1);
+        window.location.href = '?' + urlParams.toString();
+    });
+
     let searchTimeout;
     document.getElementById('search-input')?.addEventListener('keyup', function() {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             const urlParams = new URLSearchParams(window.location.search);
-            if (this.value) urlParams.set('search', this.value);
-            else urlParams.delete('search');
+            if (this.value) {
+                urlParams.set('search', this.value);
+            } else {
+                urlParams.delete('search');
+            }
             urlParams.set('page', 1);
             window.location.href = '?' + urlParams.toString();
         }, 500);
