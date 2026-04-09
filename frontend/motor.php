@@ -1,0 +1,98 @@
+<!-- START COURSE -->
+		<section class="home_course section-padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-sm-6 col-xs-12">
+						<div class="section-title">
+							<h2>Join with more than <b>80,000+ </b> <br />Courses & Learning creators.</h2>
+						</div>					
+					</div><!--- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="cour_btn">
+							<a href="course.html" class="btn_one">View all Courses <i class="ti-arrow-top-right"></i></a>
+						</div>
+					</div><!--- END COL -->
+				</div><!--- END ROW -->				
+				<div class="row">
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/1.png" class="img-fluid" alt="course-image" />
+								<span>Education</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">Complete User fundamentals beginners to advanced</a></h4>
+							<p><span class="ti-book"> </span> 12 Course</p>
+							<p><span class="ti-alarm-clock"> </span>2 Hrs 32 Min</p>
+							<div class="price">Course Fee - 99$</div>
+						</div>
+					</div><!-- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/2.png" class="img-fluid" alt="course-image" />
+								<span>UI/UX</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">Advanced Android 12 & Kotlin Development Course</a></h4>
+							<p><span class="ti-book"> </span> 41 Course</p>
+							<p><span class="ti-alarm-clock"> </span>3 Hrs 32 Min</p>
+							<div class="price">Course Fee - 49$</div>
+						</div>
+					</div><!-- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/3.png" class="img-fluid" alt="course-image" />
+								<span>Lifestyle</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">Complete HTML, CSS and Javascript Course</a></h4>
+							<p><span class="ti-book"> </span> 32 Course</p>
+							<p><span class="ti-alarm-clock"> </span>2 Hrs 32 Min</p>
+							<div class="price">Course Fee - Free</div>
+						</div>
+					</div><!-- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/4.png" class="img-fluid" alt="course-image" />
+								<span>Science</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">IOS and Swift Complete iOS Application Development</a></h4>
+							<p><span class="ti-book"> </span> 19 Course</p>
+							<p><span class="ti-alarm-clock"> </span>2 Hrs 32 Min</p>
+							<div class="price">Course Fee - 59$</div>
+						</div>
+					</div><!-- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/5.png" class="img-fluid" alt="course-image" />
+								<span>Modern</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">Learn graphics design with a best IT Trainer</a></h4>
+							<p><span class="ti-book"> </span> 22 Course</p>
+							<p><span class="ti-alarm-clock"> </span>2 Hrs 32 Min</p>
+							<div class="price">Course Fee - 79$</div>
+						</div>
+					</div><!-- END COL -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="single_course">
+							<div class="single_c_img">
+								<img src="assets/img/course/6.png" class="img-fluid" alt="course-image" />
+								<span>Marketing</span>
+							</div>
+							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+							<h4><a href="course.html">Complete data science for your next business</a></h4>
+							<p><span class="ti-book"> </span> 11 Course</p>
+							<p><span class="ti-alarm-clock"> </span>2 Hrs 32 Min</p>
+							<div class="price">Course Fee - 39$</div>
+						</div>
+					</div><!-- END COL -->						
+				</div><!--- END ROW -->
+			</div><!--- END CONTAINER -->		
+		</section>
+		<!-- END COURSE -->	

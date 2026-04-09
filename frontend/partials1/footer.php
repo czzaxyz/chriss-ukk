@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="single_footer">
-                    <a href="index.php"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
+                    <a href="index.php"><img src="../../frontend/templates/assets/img/logo.png" alt="Logo"></a>
                     <p>Sistem Peminjaman Motor terpercaya dengan berbagai pilihan motor berkualitas. Sewa motor mudah, cepat, dan aman.</p>
                     <div class="social_profile">
                         <ul>
@@ -69,13 +69,5 @@
             </div><!--- END COL -->
         </div><!--- END ROW -->
     </div><!--- END CONTAINER -->
-</div>
-<!-- END FOOTER -->
-
-<!-- START FOOTER COPYRIGHT -->
-<div class="foot_copy">
-    <div class="footer_copyright">
-        <p>&copy; <?= date('Y') ?> Sistem Peminjaman Motor. All Rights Reserved.</p>
-    </div>
 </div>
 <!-- END FOOTER COPYRIGHT -->
