@@ -1,0 +1,659 @@
+/* ============================================
+   PREMIUM STYLE - MODERN & COMFORTABLE
+   UNTUK HALAMAN: Index, Create, Edit, Detail
+   ============================================ */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   MAIN CONTENT - KONSISTEN SEMUA HALAMAN
+   ============================================ */
+#main {
+    margin-left: 260px;
+    margin-top: 70px;
+    padding: 25px 30px;
+    width: calc(100% - 260px);
+    min-height: calc(100vh - 70px);
+    transition: all 0.3s ease;
+    background: #f0f2f5;
+}
+
+@media (max-width: 992px) {
+    #main {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+/* ============================================
+   CARD STYLES - UNTUK SEMUA HALAMAN
+   ============================================ */
+.card-modern {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-modern:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-header-modern {
+    background: white;
+    padding: 18px 24px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.card-header-modern h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.card-header-modern h4 i {
+    margin-right: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-body-modern {
+    padding: 24px;
+}
+
+/* ============================================
+   TABLE STYLES - UNTUK INDEX
+   ============================================ */
+.table-custom {
+    width: 100%;
+    font-size: 0.9rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-custom thead th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table-custom thead th:first-child {
+    border-radius: 12px 0 0 0;
+}
+
+.table-custom thead th:last-child {
+    border-radius: 0 12px 0 0;
+}
+
+.table-custom tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: middle;
+    color: #4a5568;
+}
+
+.table-custom tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+    background: linear-gradient(90deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+/* ============================================
+   FORM STYLES - UNTUK CREATE & EDIT
+   ============================================ */
+.form-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 25px 30px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+.form-header .form-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    backdrop-filter: blur(5px);
+}
+
+.form-header .form-icon i {
+    font-size: 32px;
+}
+
+.form-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.form-header p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.form-body {
+    padding: 30px;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-label i {
+    margin-right: 6px;
+    color: #667eea;
+}
+
+.form-control, .form-select {
+    font-size: 0.9rem !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.form-control:hover, .form-select:hover {
+    border-color: #cbd5e0 !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+    outline: none;
+}
+
+.input-group-text {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px 0 0 10px;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.input-group .form-control {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ============================================
+   DETAIL PAGE STYLES
+   ============================================ */
+.detail-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.detail-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.detail-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+.detail-header .motor-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    backdrop-filter: blur(5px);
+}
+
+.detail-header .motor-icon i {
+    font-size: 32px;
+}
+
+.detail-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.detail-header .kode-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    backdrop-filter: blur(5px);
+}
+
+.detail-body {
+    padding: 30px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* DESKRIPSI FULL WIDTH - MENTOK SAMPAI KANAN */
+.info-item:has(.fa-align-left),
+.info-item.deskripsi-item {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.info-item {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: all 0.2s ease;
+    border: 1px solid #eef2f6;
+}
+
+.info-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e0;
+}
+
+.info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #667eea;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.info-label i {
+    margin-right: 6px;
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* Style untuk textarea agar lebar penuh */
+.info-item textarea {
+    width: 100%;
+    min-height: 100px;
+}
+
+.detail-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eef2f6;
+}
+
+/* ============================================
+   BUTTON STYLES - UNTUK SEMUA HALAMAN
+   ============================================ */
+.btn {
+    border-radius: 10px !important;
+    padding: 8px 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%) !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    background: white !important;
+    border: 1.5px solid #e2e8f0 !important;
+    color: #4a5568 !important;
+}
+
+.btn-outline-secondary:hover {
+    background: #f8fafc !important;
+    border-color: #cbd5e0 !important;
+}
+
+/* Action Buttons for Table */
+.btn-action {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 0 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-action i {
+    font-size: 0.75rem;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    color: white;
+}
+
+.btn-view {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #fad961 0%, #f76b1c 100%);
+    color: white;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ff5858 0%, #f09819 100%);
+    color: white;
+}
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-tersedia {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+}
+
+.status-dipinjam {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+}
+
+.status-rusak {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+}
+
+.status-hilang {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+}
+
+/* ============================================
+   ALERT STYLES
+   ============================================ */
+.alert {
+    padding: 14px 18px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: none;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    color: #c53030;
+    border-left: 4px solid #fc8181;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+    color: #276749;
+    border-left: 4px solid #68d391;
+}
+
+/* ============================================
+   BADGE STYLES
+   ============================================ */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.badge-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.badge-info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* ============================================
+   FOOTER STYLES
+   ============================================ */
+.footer-custom {
+    margin-top: 25px;
+    text-align: center;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: #718096;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 992px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .detail-footer {
+        flex-direction: column;
+    }
+    
+    .detail-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-action span {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-custom thead th {
+        font-size: 0.7rem;
+        padding: 10px 8px;
+    }
+    
+    .table-custom tbody td {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .card-header-modern {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .card-header-modern .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .form-body {
+        padding: 20px;
+    }
+    
+    .form-header {
+        padding: 20px;
+    }
+    
+    .form-header h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-modern, .detail-card, .form-card {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* ============================================
+   DATATABLES CUSTOM (UNTUK INDEX)
+   ============================================ */
+.dataTables_wrapper .dataTables_filter input {
+    padding: 8px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 6px 10px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    margin: 0 5px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    border-color: transparent;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+}
+

@@ -29,6 +29,10 @@ if (isset($_POST['tombol'])) {
                 VALUES ('$kode_barang', '$nama_barang', $kategori_id, '$merk', " . ($tahun ? $tahun : "NULL") . ", $stok, $jumlah_tersedia, '$status', $harga_sewa_perhari, '$deskripsi')";
     
     if (mysqli_query($connect, $qInsert)) {
+        // Catat log aktivitas
+        $aktivitas = "Menambahkan motor baru: $nama_barang (Kode: $kode_barang) | Stok: $stok | Harga: Rp " . number_format($harga_sewa_perhari, 0, ',', '.');
+        logActivity($aktivitas);
+        
         $_SESSION['success'] = "Motor berhasil ditambahkan!";
         header("Location: ../../pages/motor/index.php");
         exit;
