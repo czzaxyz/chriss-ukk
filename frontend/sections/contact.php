@@ -1,6 +1,6 @@
 <?php
-include "../partials1/header.php";
-include "../partials1/navbar.php";
+include "../partials/header.php";
+include "../partials/navbar.php";
 include "../../config/koneksi.php";
 
 // Proses simpan pesan ke database
@@ -266,5 +266,5 @@ function validation() {
 }
 </script>
 
-<?php include "../partials1/footer.php"; ?>
-<?php include "../partials1/script.php"; ?>
+<?php include "../partials/footer.php"; ?>
+<?php include "../partials/script.php"; ?>

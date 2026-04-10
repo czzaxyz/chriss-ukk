@@ -1,6 +1,6 @@
 <?php
-include "../partials1/header.php";
-include "../partials1/navbar.php";
+include "../partials/header.php";
+include "../partials/navbar.php";
 include "../../config/koneksi.php";
 
 // Ambil parameter
@@ -21,7 +21,7 @@ if (!empty($search)) {
     $where .= " AND (b.nama_barang LIKE '%$search%' OR b.merk LIKE '%$search%' OR b.kode_barang LIKE '%$search%')";
 }
 
-// Query motor
+// Query motor (tambahkan slug)
 $query_motor = mysqli_query($connect, "SELECT b.*, k.nama_kategori 
     FROM barang b 
     LEFT JOIN kategori k ON b.kategori_id = k.id 
@@ -68,11 +68,14 @@ $query_kategori = mysqli_query($connect, "SELECT * FROM kategori ORDER BY nama_k
         <!-- Grid Motor -->
         <div class="row">
             <?php if (mysqli_num_rows($query_motor) > 0): ?>
-                <?php while ($motor = mysqli_fetch_assoc($query_motor)): ?>
+                <?php while ($motor = mysqli_fetch_assoc($query_motor)): 
+                    // Gunakan slug jika ada, jika tidak pakai ID
+                    $detail_link = !empty($motor['slug']) ? "detail-motor/" . $motor['slug'] : "motor_detail.php?id=" . $motor['id'];
+                ?>
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0">
                         <div class="our-team">
                             <div class="team-content">
-                                <a href="motor_detail.php?id=<?= $motor['id'] ?>">
+                                <a href="<?= $detail_link ?>">
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaTv8EpZfudmW9qVbWoaEFkDa4A0enXrI02w&s" alt="<?= htmlspecialchars($motor['nama_barang']) ?>">
                                 </a>
                                 <ul class="social-links">
@@ -80,7 +83,7 @@ $query_kategori = mysqli_query($connect, "SELECT * FROM kategori ORDER BY nama_k
                                 </ul>
                             </div>
                             <div class="team-prof">
-                                <h3><a href="motor_detail.php?id=<?= $motor['id'] ?>"><?= htmlspecialchars($motor['nama_barang']) ?></a></h3>
+                                <h3><a href="<?= $detail_link ?>"><?= htmlspecialchars($motor['nama_barang']) ?></a></h3>
                                 <span><?= htmlspecialchars($motor['merk'] ?? 'Umum') ?> • <?= $motor['tahun'] ?? '-' ?></span>
                             </div>
                             <div class="sth_det2">
@@ -91,7 +94,7 @@ $query_kategori = mysqli_query($connect, "SELECT * FROM kategori ORDER BY nama_k
                                 Rp <?= number_format($motor['harga_sewa_perhari'], 0, ',', '.') ?>
                                 <span class="per-day">/hari</span>
                             </div>
-                            <a href="motor_detail.php?id=<?= $motor['id'] ?>" class="btn-rent">
+                            <a href="<?= $detail_link ?>" class="btn-rent">
                                 Sewa Sekarang <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -361,5 +364,5 @@ $query_kategori = mysqli_query($connect, "SELECT * FROM kategori ORDER BY nama_k
 }
 </style>
 
-<?php include "../partials1/footer.php"; ?>
-<?php include "../partials1/script.php"; ?>
+<?php include "../partials/footer.php"; ?>
+<?php include "../partials/script.php"; ?>

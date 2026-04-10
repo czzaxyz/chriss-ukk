@@ -1,6 +1,7 @@
 <?php
 session_start();
-include "../../app.php";
+include "../../config/koneksi.php";
+include "../../config/escapeString.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die("Akses tidak valid!");
@@ -62,7 +63,7 @@ if (!empty($errors)) {
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: ./register.php");
+    header("Location: register");
     exit;
 }
 
@@ -78,7 +79,7 @@ if (mysqli_num_rows($checkId) > 0) {
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: ./register.php");
+    header("Location: register");
     exit;
 }
 
@@ -94,7 +95,7 @@ if (mysqli_num_rows($checkUsername) > 0) {
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: ./register.php");
+    header("Location: register");
     exit;
 }
 
@@ -111,7 +112,7 @@ if (!empty($email)) {
             'no_telp' => $no_telp,
             'alamat' => $alamat
         ];
-        header("Location: ./register.php");
+        header("Location: register");
         exit;
     }
 }
@@ -125,7 +126,7 @@ $qInsert = "INSERT INTO users (id, username, nama_lengkap, email, no_telp, alama
 
 if (mysqli_query($connect, $qInsert)) {
     $_SESSION['register_success'] = "Registrasi berhasil! Silakan login dengan username '$username'.";
-    header("Location: ./login.php");
+    header("Location: ../login");
     exit;
 } else {
     $_SESSION['register_errors'] = ["Gagal melakukan registrasi: " . mysqli_error($connect)];
@@ -137,7 +138,7 @@ if (mysqli_query($connect, $qInsert)) {
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: ./register.php");
+    header("Location: register");
     exit;
 }
 ?>

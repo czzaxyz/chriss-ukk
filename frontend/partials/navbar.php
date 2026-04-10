@@ -23,22 +23,22 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
             <div class="col-60 d-flex">
                 <nav id="main-menu">
                     <ul>
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="frontend/sections/about.php">About</a></li>
+                        <li><a href="./">Home</a></li>
+                        <li><a href="./about">About</a></li>
                         <li class="menu-item-has-children"><a href="#">Motor</a>
                             <ul>
-                                <li><a href="frontend/sections/motor.php?kategori=matic">Matic</a></li>
-                                <li><a href="frontend/sections/motor.php?kategori=trail%2Foffroad">Trail/Offroad</a></li>
-                                <li><a href="frontend/sections/motor.php?kategori=sport">Sport</a></li>
-                                <li><a href="frontend/sections/motor.php?kategori=bebek">Bebek</a></li>
-                                <li><a href="frontend/sections/motor.php?kategori=skuter">Skuter</a></li>
-                                <li><a href="frontend/sections/motor.php?kategori=classic">Classic</a></li>
+                                <li><a href="motor?kategori=matic">Matic</a></li>
+                                <li><a href="motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
+                                <li><a href="motor?kategori=sport">Sport</a></li>
+                                <li><a href="motor?kategori=bebek">Bebek</a></li>
+                                <li><a href="motor?kategori=skuter">Skuter</a></li>
+                                <li><a href="motor?kategori=classic">Classic</a></li>
                             </ul>
                         </li>
                         <?php if ($isLoggedIn): ?>
-                            <li><a href="frontend/sections/peminjaman.php">Peminjaman Saya</a></li>
+                            <li><a href="peminjaman">Peminjaman Saya</a></li>
                         <?php endif; ?>
-                        <li><a href="frontend/sections/contact.php">Contact</a></li>
+                        <li><a href="contact">Contact</a></li>
                     </ul>
                 </nav>
             </div><!--- END Col -->
@@ -56,33 +56,33 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
                     </div>
                 <?php else: ?>
                     <!-- Tampilan ketika belum login -->
-                    <a href="frontend/auth/login.php" class="header-btn">Sign In</a>
-                    <a href="frontend/auth/register.php" class="btn_one">Sign Up</a>
+                    <a href="login" class="header-btn">Sign In</a>
+                    <a href="register" class="btn_one">Sign Up</a>
                 <?php endif; ?>
             </div><!--- END Col -->
 
             <ul class="mobile_menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="frontend/sections/about.php">About</a></li>
+                <li><a href="./">Home</a></li>
+                <li><a href="about">About</a></li>
                 <li class="menu-item-has-children"><a href="#">Motor</a>
                     <ul>
-                        <li><a href="../../frontend/sections/motor.php?kategori=matic">Matic</a></li>
-                        <li><a href="../../frontend/sections/motor.php?kategori=trail%2Foffroad">Trail/Offroad</a></li>
-                        <li><a href="../../frontend/sections/motor.php?kategori=sport">Sport</a></li>
-                        <li><a href="../../frontend/sections/motor.php?kategori=bebek">Bebek</a></li>
-                        <li><a href="../../frontend/sections/motor.php?kategori=skuter">Skuter</a></li>
-                        <li><a href="../../frontend/sections/motor.php?kategori=classic">Classic</a></li>
+                        <li><a href="motor?kategori=matic">Matic</a></li>
+                        <li><a href="motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
+                        <li><a href="motor?kategori=sport">Sport</a></li>
+                        <li><a href="motor?kategori=bebek">Bebek</a></li>
+                        <li><a href="motor?kategori=skuter">Skuter</a></li>
+                        <li><a href="motor?kategori=classic">Classic</a></li>
                     </ul>
                 </li>
                 <?php if ($isLoggedIn): ?>
-                    <li><a href="frontend/sections/peminjaman.php">Peminjaman Saya</a></li>
+                    <li><a href="peminjaman">Peminjaman Saya</a></li>
                 <?php endif; ?>
-                <li><a href="frontend/sections/contact.php">Contact</a></li>
+                <li><a href="contact">Contact</a></li>
                 <?php if ($isLoggedIn): ?>
                     <li><a href="../../chriss-ukk/frontend/auth/logout.php">Logout</a></li>
                 <?php else: ?>
-                    <li><a href="frontend/auth/login.php">Sign In</a></li>
-                    <li><a href="frontend/auth/register.php">Sign Up</a></li>
+                    <li><a href="login.php">Sign In</a></li>
+                    <li><a href="register.php">Sign Up</a></li>
                 <?php endif; ?>
             </ul>
         </div><!--- END ROW -->

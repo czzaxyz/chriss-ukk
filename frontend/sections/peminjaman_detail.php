@@ -1,7 +1,7 @@
 <?php
 session_start();
-include "../partials1/header.php";
-include "../partials1/navbar.php";
+include "../partials/header.php";
+include "../partials/navbar.php";
 include "../../config/koneksi.php";
 
 // Cek login
@@ -23,20 +23,31 @@ if ($_SESSION['role'] != 'peminjam') {
 }
 
 $user_id = $_SESSION['user_id'];
+
+// Ambil parameter (bisa id atau slug)
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$slug = isset($_GET['slug']) ? mysqli_real_escape_string($connect, $_GET['slug']) : '';
 
 // Query detail peminjaman (pastikan milik user yang login)
-$query = mysqli_query($connect, "SELECT p.*, b.nama_barang, b.kode_barang, b.merk, b.tahun, b.harga_sewa_perhari, b.deskripsi as motor_deskripsi, k.nama_kategori
-    FROM peminjaman p 
-    LEFT JOIN barang b ON p.barang_id = b.id 
-    LEFT JOIN kategori k ON b.kategori_id = k.id
-    WHERE p.id = $id AND p.user_id = $user_id");
+if (!empty($slug)) {
+    $query = mysqli_query($connect, "SELECT p.*, b.nama_barang, b.kode_barang, b.merk, b.tahun, b.harga_sewa_perhari, b.deskripsi as motor_deskripsi, k.nama_kategori
+        FROM peminjaman p 
+        LEFT JOIN barang b ON p.barang_id = b.id 
+        LEFT JOIN kategori k ON b.kategori_id = k.id
+        WHERE p.slug = '$slug' AND p.user_id = $user_id");
+} else {
+    $query = mysqli_query($connect, "SELECT p.*, b.nama_barang, b.kode_barang, b.merk, b.tahun, b.harga_sewa_perhari, b.deskripsi as motor_deskripsi, k.nama_kategori
+        FROM peminjaman p 
+        LEFT JOIN barang b ON p.barang_id = b.id 
+        LEFT JOIN kategori k ON b.kategori_id = k.id
+        WHERE p.id = $id AND p.user_id = $user_id");
+}
 $peminjaman = mysqli_fetch_assoc($query);
 
 if (!$peminjaman) {
     echo "<script>
         alert('Data peminjaman tidak ditemukan!');
-        window.location.href = 'peminjaman_saya.php';
+        window.location.href = 'peminjaman';
     </script>";
     exit;
 }
@@ -52,8 +63,8 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
             <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
                 <h1>Detail Peminjaman</h1>
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="peminjaman_saya.php">Peminjaman Saya</a></li>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="peminjaman">Peminjaman Saya</a></li>
                     <li> / Detail</li>
                 </ul>
             </div>
@@ -268,7 +279,7 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
 
                 <!-- Tombol Kembali -->
                 <div class="back-button">
-                    <a href="peminjaman.php" class="btn-back">
+                    <a href="../peminjaman" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Kembali ke Peminjaman Saya
                     </a>
                 </div>
@@ -472,5 +483,5 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
 }
 </style>
 
-<?php include "../partials1/footer.php"; ?>
-<?php include "../partials1/script.php"; ?>
+<?php include "../partials/footer.php"; ?>
+<?php include "../partials/script.php"; ?>

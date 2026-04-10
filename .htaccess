@@ -1,0 +1,48 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /chriss-ukk/
+
+# ============================================
+# FRONTEND ROUTING
+# ============================================
+
+# Index
+RewriteRule ^$ index.php [L,QSA]
+
+# About
+RewriteRule ^about$ frontend/sections/about.php [L,QSA]
+
+# Contact
+RewriteRule ^contact$ frontend/sections/contact.php [L,QSA]
+
+# Motor - Daftar Motor
+RewriteRule ^motor$ frontend/sections/motor.php [L,QSA]
+RewriteRule ^motor/page-([0-9]+)$ frontend/sections/motor.php?page=$1 [L,QSA]
+
+# Motor by Kategori
+RewriteRule ^motor/matic$ frontend/sections/motor.php?kategori=matic [L,QSA]
+RewriteRule ^motor/trail-offroad$ frontend/sections/motor.php?kategori=trail/offroad [L,QSA]
+RewriteRule ^motor/sport$ frontend/sections/motor.php?kategori=sport [L,QSA]
+RewriteRule ^motor/bebek$ frontend/sections/motor.php?kategori=bebek [L,QSA]
+RewriteRule ^motor/skuter$ frontend/sections/motor.php?kategori=skuter [L,QSA]
+RewriteRule ^motor/classic$ frontend/sections/motor.php?kategori=classic [L,QSA]
+
+# Detail Motor (dengan slug)
+RewriteRule ^detail-motor/([a-zA-Z0-9_-]+)$ frontend/sections/motor_detail.php?slug=$1 [L,QSA]
+
+# Peminjaman (Hanya untuk user login)
+RewriteRule ^peminjaman$ frontend/sections/peminjaman.php [L,QSA]
+RewriteRule ^detail-peminjaman/([a-zA-Z0-9_-]+)$ frontend/sections/peminjaman_detail.php?slug=$1 [L,QSA]
+
+# ============================================
+# AUTH (Login/Register)
+# ============================================
+
+# Halaman Auth
+RewriteRule ^login$ frontend/auth/login.php [L,QSA]
+RewriteRule ^register$ frontend/auth/register.php [L,QSA]
+RewriteRule ^logout$ frontend/auth/logout.php [L,QSA]
+
+# Proses Auth (POST)
+RewriteRule ^auth/login$ frontend/auth/login_proses.php [L,QSA]
+RewriteRule ^auth/register$ frontend/auth/register_proses.php [L,QSA]

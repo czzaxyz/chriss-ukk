@@ -1,5 +1,5 @@
-<?php include "../partials1/header.php"; ?>
-<?php include "../partials1/navbar.php"; ?>
+<?php include "../partials/header.php"; ?>
+<?php include "../partials/navbar.php"; ?>
 
 <!-- START SECTION TOP -->
 <section class="section-top">
@@ -172,8 +172,8 @@
 </section>
 <!-- END COUNTER -->
 
-<?php include "../partials1/footer.php"; ?>
-<?php include "../partials1/script.php"; ?>
+<?php include "../partials/footer.php"; ?>
+<?php include "../partials/script.php"; ?>
 
 <style>
     /* Click Dropdown - Tidak Ada Getaran */

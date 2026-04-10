@@ -1,18 +1,3 @@
-<?php
-// Tidak boleh ada spasi atau baris kosong sebelum ini!
-// Pastikan file disimpan dengan encoding UTF-8 tanpa BOM
-
-// Cek session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Cek login
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
-    header("Location: ../../pages/auth/login.php?pesan=belum_login");
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +8,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['st
         sizes="76x76"
         href="../../../templates-admin/build/assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../../../templates-admin/build/assets/img/favicon.png" />
-    <title>Website Peminjaman Motor</title>
+    <title>Sistem Peminjaman Motor</title>
     <!--     Fonts and icons     -->
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -52,8 +37,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['st
 </head>
 
 <body class="m-0 font-sans text-base antialiased font-normal leading-default bg-gray-50 text-slate-500">
-
-    <!-- START PRELOADER -->
     <?php
     // Tidak boleh ada spasi atau baris kosong sebelum ini!
     // Pastikan file disimpan dengan encoding UTF-8 tanpa BOM
@@ -65,7 +48,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['st
 
     // Cek login
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
-        header("Location: ../../pages/auth/login.php?pesan=belum_login");
+        header("Location: ../../../pages/auth/login.php?pesan=belum_login");
         exit();
     }
     ?>

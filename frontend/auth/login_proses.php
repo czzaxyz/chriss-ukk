@@ -4,14 +4,14 @@ include '../../config/koneksi.php'; // Path ke app.php di root
 
 // Validasi method POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header("Location: ./login.php");
+    header("Location: ../login");
     exit();
 }
 
 // Validasi input
 if (empty($_POST['username']) || empty($_POST['password'])) {
     $_SESSION['login_error'] = "Username dan password wajib diisi!";
-    header("Location: ./login.php?pesan=gagal");
+    header("Location: ../login?pesan=gagal");
     exit();
 }
 
@@ -23,7 +23,7 @@ $qUser = mysqli_query($connect, "SELECT * FROM users WHERE username='$username' 
 
 if (!$qUser) {
     $_SESSION['login_error'] = "Terjadi kesalahan pada server!";
-    header("Location: ./login.php?pesan=gagal");
+    header("Location: ../login?pesan=gagal");
     exit();
 }
 
@@ -42,32 +42,32 @@ if (mysqli_num_rows($qUser) > 0) {
         // Redirect berdasarkan role
         switch($data['role']) {
             case 'admin':
-                header("Location: ../../index.php");
+                header("Location: /chriss-ukk/");
                 exit();
                 
             case 'petugas':
-                header("Location: ../../index.php");
+                header("Location: /chriss-ukk/");
                 exit();
                 
             case 'peminjam':
-                header("Location: ../../index.php");
+                header("Location: /chriss-ukk/");
                 exit();
                 
             default:
                 $_SESSION['login_error'] = "Role tidak valid! Hubungi administrator.";
-                header("Location: ./login.php?pesan=gagal");
+                header("Location: ../login?pesan=gagal");
                 exit();
         }
     } else {
         // Password salah
         $_SESSION['login_error'] = "Password salah! Silakan coba lagi.";
-        header("Location: ./login.php?pesan=gagal");
+        header("Location: ../login?pesan=gagal");
         exit();
     }
 } else {
     // Username tidak ditemukan
-    $_SESSION['login_error'] = "Username tidak ditemukan!";
-    header("Location: ./login.php?pesan=gagal");
+    $_SESSION['login_error'];
+    header("Location: ../login?pesan=gagal");
     exit();
 }
 ?>
