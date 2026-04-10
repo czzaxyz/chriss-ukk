@@ -21,7 +21,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Login | MoToR Luxury System</title>
+    <title>Login | Sistem Peminjaman Motor</title>
+
+    <link rel="icon" type="image/png" href="/chriss-ukk/backend/templates-admin/build/assets/img/favicon.png" />
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">

@@ -446,9 +446,6 @@ body {
     <!-- Header -->
     <div class="page-header">
         <h2><i class="fas fa-motorcycle me-2"></i> Data Motor</h2>
-        <a href="create.php" class="btn-add">
-            <i class="fas fa-plus-circle"></i> Tambah Motor
-        </a>
     </div>
 
     <!-- Alert Messages -->
@@ -521,14 +518,6 @@ body {
                             <td class="action-buttons">
                                 <a href="detail.php?id=<?= $row['id'] ?>" class="btn-detail" title="Detail">
                                     <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="edit.php?id=<?= $row['id'] ?>" class="btn-edit" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="../../action/motor/destroy.php?id=<?= $row['id'] ?>" 
-                                   onclick="return confirm('Yakin ingin menghapus motor <?= addslashes($row['nama_barang']) ?>?')"
-                                   class="btn-delete" title="Hapus">
-                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>

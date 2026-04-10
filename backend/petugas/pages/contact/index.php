@@ -514,11 +514,6 @@ body {
                                     <i class="fas fa-reply-all"></i> 
                                 </a>
                                 <?php endif; ?>
-                                <a href="../../action/contact/destroy.php?id=<?= $row['id'] ?>" 
-                                   onclick="return confirm('Hapus pesan dari <?= addslashes($row['name']) ?>?')"
-                                   class="btn-delete" title="Hapus">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
                             </td>
                         </tr>
                     <?php endwhile; ?>

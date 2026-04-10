@@ -92,17 +92,12 @@ if (!$peminjaman) header("Location: index.php");
             <?php endif; ?>
             <div class="detail-footer">
                 <a href="index.php" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
-                <a href="../../action/peminjaman/approve.php?id=<?= $peminjaman->id ?>" class="btn btn-success" onclick="return confirm('Setujui peminjaman ini?')">
-                    <i class="fas fa-check"></i> Setujui
-                </a>
                 <?php if ($peminjaman->status == 'dipinjam'): ?>
                     <a href="../../action/peminjaman/return.php?id=<?= $peminjaman->id ?>" class="btn btn-warning">
                         <i class="fas fa-undo-alt"></i> Pengembalian
                     </a>
                 <?php endif; ?>
-                <a href="../../action/peminjaman/destroy.php?id=<?= $peminjaman->id ?>" onclick="return confirm('Hapus peminjaman ini?')" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-            </div>
-        </div>
+                
     </div>
 </div>
 

@@ -67,12 +67,6 @@ if (!$motor) header("Location: index.php");
                 <a href="index.php" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <a href="edit.php?id=<?= $motor->id ?>" class="btn btn-warning">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
-                <a href="../../action/motor/destroy.php?id=<?= $motor->id ?>" onclick="return confirm('Hapus motor <?= addslashes($motor->nama_barang) ?>?')" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Hapus
-                </a>
             </div>
         </div>
     </div>

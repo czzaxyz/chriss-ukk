@@ -402,9 +402,6 @@ $q_peminjaman = mysqli_query($connect, "SELECT p.*, u.username, u.nama_lengkap, 
 <div id="main">
     <div class="page-header">
         <h2><i class="fas fa-handshake me-2"></i> Data Peminjaman</h2>
-        <a href="create.php" class="btn-add">
-            <i class="fas fa-plus-circle"></i> Tambah Peminjaman
-        </a>
     </div>
 
     <?php if (isset($_SESSION['success'])): ?>
@@ -477,11 +474,6 @@ $q_peminjaman = mysqli_query($connect, "SELECT p.*, u.username, u.nama_lengkap, 
                                         <i class="fas fa-undo-alt"></i>
                                     </a>
                                 <?php endif; ?>
-                                <a href="../../action/peminjaman/destroy.php?id=<?= $row['id'] ?>"
-                                    onclick="return confirm('Yakin ingin menghapus peminjaman ini?')"
-                                    class="btn-delete" title="Hapus">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -490,7 +482,6 @@ $q_peminjaman = mysqli_query($connect, "SELECT p.*, u.username, u.nama_lengkap, 
                         <td colspan="10">
                             <div class="empty-state"><i class="fas fa-handshake"></i>
                                 <h4>Belum Ada Data Peminjaman</h4>
-                                <p>Klik tombol "Tambah Peminjaman" untuk memulai</p>
                             </div>
                         </td>
                     </tr>
