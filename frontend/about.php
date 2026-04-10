@@ -30,7 +30,7 @@
                     
                     <!-- Tombol CTA -->
                     <div class="hero-buttons">
-                        <a href="frontend/sections/motor.php" class="btn-primary-hero">
+                        <a href="frontend/sections/contact.php" class="btn-primary-hero">
                             <i class="fas fa-motorcycle"></i> Sewa Sekarang
                             <i class="fas fa-arrow-right"></i>
                         </a>

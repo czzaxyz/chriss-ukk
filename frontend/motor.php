@@ -51,7 +51,7 @@ $query_motor = mysqli_query($connect, "SELECT b.*, k.nama_kategori
                                 Rp <?= number_format($motor['harga_sewa_perhari'], 0, ',', '.') ?>
                                 <span>/hari</span>
                             </div>
-                            <a href="motor_detail.php?id=<?= $motor['id'] ?>" class="btn-rent">
+                            <a href="frontend/sections/motor_detail.php?id=<?= $motor['id'] ?>" class="btn-rent">
                                 <i class="fas fa-motorcycle"></i> Sewa Sekarang
                             </a>
                         </div>

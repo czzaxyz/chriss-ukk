@@ -27,12 +27,12 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
                         <li><a href="frontend/sections/about.php">About</a></li>
                         <li class="menu-item-has-children"><a href="#">Motor</a>
                             <ul>
-                                <li><a href="../../frontend/sections/motor.php?kategori=matic">Matic</a></li>
-                                <li><a href="../../frontend/sections/motor.php?kategori=trail%2Foffroad">Trail/Offroad</a></li>
-                                <li><a href="../../frontend/sections/motor.php?kategori=sport">Sport</a></li>
-                                <li><a href="../../frontend/sections/motor.php?kategori=bebek">Bebek</a></li>
-                                <li><a href="../../frontend/sections/motor.php?kategori=skuter">Skuter</a></li>
-                                <li><a href="../../frontend/sections/motor.php?kategori=classic">Classic</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=matic">Matic</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=trail%2Foffroad">Trail/Offroad</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=sport">Sport</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=bebek">Bebek</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=skuter">Skuter</a></li>
+                                <li><a href="frontend/sections/motor.php?kategori=classic">Classic</a></li>
                             </ul>
                         </li>
                         <?php if ($isLoggedIn): ?>

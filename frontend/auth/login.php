@@ -3,7 +3,7 @@ session_start();
 
 // Jika sudah login, redirect ke dashboard sesuai role
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-    switch($_SESSION['role']) {
+    switch ($_SESSION['role']) {
         case 'admin':
             header("Location: ../../index.php");
             exit();
@@ -18,27 +18,30 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Login | MoToR Luxury System</title>
-    
+    <title>Login | Sistem Peminjaman Motor</title>
+
+    <link rel="icon" type="image/png" href="../templates/assets/img/favicon.png" />
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -46,7 +49,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             position: relative;
             overflow-x: hidden;
         }
-        
+
         /* Animated Background */
         .bg-animation {
             position: fixed;
@@ -57,7 +60,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             z-index: 0;
             overflow: hidden;
         }
-        
+
         .bg-animation .circle {
             position: absolute;
             border-radius: 50%;
@@ -65,7 +68,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             filter: blur(60px);
             animation: float 20s infinite ease-in-out;
         }
-        
+
         .circle-1 {
             width: 400px;
             height: 400px;
@@ -73,7 +76,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             left: -100px;
             animation-delay: 0s;
         }
-        
+
         .circle-2 {
             width: 500px;
             height: 500px;
@@ -82,7 +85,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             animation-delay: 5s;
             background: linear-gradient(135deg, rgba(0, 229, 255, 0.3), rgba(124, 58, 237, 0.3));
         }
-        
+
         .circle-3 {
             width: 300px;
             height: 300px;
@@ -92,13 +95,23 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             animation-delay: 10s;
             background: linear-gradient(135deg, rgba(255, 45, 142, 0.2), rgba(0, 229, 255, 0.2));
         }
-        
+
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
         }
-        
+
         /* Container */
         .container {
             position: relative;
@@ -109,7 +122,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             justify-content: center;
             padding: 20px;
         }
-        
+
         /* Main Card */
         .luxury-card {
             max-width: 460px;
@@ -122,19 +135,19 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .luxury-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6);
         }
-        
+
         /* Header */
         .card-header-luxury {
             padding: 40px 40px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .logo-wrapper {
             width: 80px;
             height: 80px;
@@ -147,18 +160,25 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             transform: rotate(45deg);
             animation: logoSpin 0.5s ease-out;
         }
-        
+
         @keyframes logoSpin {
-            from { transform: rotate(0deg) scale(0); opacity: 0; }
-            to { transform: rotate(45deg) scale(1); opacity: 1; }
+            from {
+                transform: rotate(0deg) scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: rotate(45deg) scale(1);
+                opacity: 1;
+            }
         }
-        
+
         .logo-wrapper i {
             font-size: 40px;
             color: white;
             transform: rotate(-45deg);
         }
-        
+
         .brand-title {
             font-size: 28px;
             font-weight: 700;
@@ -167,41 +187,41 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
         }
-        
+
         .brand-subtitle {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
             margin-top: 8px;
         }
-        
+
         /* Body */
         .card-body-luxury {
             padding: 30px 40px 40px;
         }
-        
+
         /* Welcome Message */
         .welcome-message {
             text-align: center;
             margin-bottom: 30px;
         }
-        
+
         .welcome-message h3 {
             font-size: 24px;
             font-weight: 600;
             color: white;
             margin-bottom: 8px;
         }
-        
+
         .welcome-message p {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.5);
         }
-        
+
         /* Form Groups */
         .form-group {
             margin-bottom: 24px;
         }
-        
+
         .form-label {
             display: block;
             font-size: 12px;
@@ -210,13 +230,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
-        
+
         .input-wrapper {
             position: relative;
             display: flex;
             align-items: center;
         }
-        
+
         .input-wrapper i.input-icon {
             position: absolute;
             left: 18px;
@@ -225,7 +245,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             transition: all 0.3s;
             z-index: 1;
         }
-        
+
         .input-wrapper input {
             width: 100%;
             padding: 16px 50px 16px 50px;
@@ -237,22 +257,22 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
-        
+
         .input-wrapper input:focus {
             outline: none;
             border-color: #ff2d8e;
             background: rgba(255, 255, 255, 0.08);
             box-shadow: 0 0 20px rgba(255, 45, 142, 0.2);
         }
-        
-        .input-wrapper input:focus + i.input-icon {
+
+        .input-wrapper input:focus+i.input-icon {
             color: #ff2d8e;
         }
-        
+
         .input-wrapper input::placeholder {
             color: rgba(255, 255, 255, 0.3);
         }
-        
+
         /* Password Toggle - DI LUAR (sebelah kanan input) */
         .password-toggle {
             position: absolute;
@@ -268,11 +288,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             align-items: center;
             justify-content: center;
         }
-        
+
         .password-toggle:hover {
             color: #ff2d8e;
         }
-        
+
         /* Options Row */
         .options-row {
             display: flex;
@@ -280,38 +300,38 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             align-items: center;
             margin-bottom: 30px;
         }
-        
+
         .checkbox-wrapper {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
         }
-        
+
         .checkbox-wrapper input {
             width: 18px;
             height: 18px;
             accent-color: #ff2d8e;
             cursor: pointer;
         }
-        
+
         .checkbox-wrapper span {
             font-size: 13px;
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .forgot-link {
             font-size: 13px;
             color: #ff2d8e;
             text-decoration: none;
             transition: all 0.3s;
         }
-        
+
         .forgot-link:hover {
             text-decoration: underline;
             color: #ff6bb5;
         }
-        
+
         /* Login Button */
         .btn-login {
             width: 100%;
@@ -331,7 +351,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-login::before {
             content: '';
             position: absolute;
@@ -342,26 +362,26 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
-        
+
         .btn-login:hover::before {
             left: 100%;
         }
-        
+
         .btn-login:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(255, 45, 142, 0.4);
         }
-        
+
         .btn-login:active {
             transform: translateY(0);
         }
-        
+
         .btn-login:disabled {
             opacity: 0.7;
             cursor: not-allowed;
             transform: none;
         }
-        
+
         /* Loading Spinner */
         .spinner {
             width: 20px;
@@ -371,11 +391,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         /* Register Link */
         .register-link {
             text-align: center;
@@ -383,24 +405,24 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .register-link p {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.5);
         }
-        
+
         .register-link a {
             color: #ff2d8e;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
         }
-        
+
         .register-link a:hover {
             text-decoration: underline;
             color: #ff6bb5;
         }
-        
+
         /* Alert Styles */
         .alert-luxury {
             padding: 16px 20px;
@@ -411,49 +433,50 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             gap: 12px;
             animation: slideIn 0.4s ease-out;
         }
-        
+
         @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateX(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
             }
         }
-        
+
         .alert-luxury i {
             font-size: 20px;
         }
-        
+
         .alert-luxury .alert-content {
             flex: 1;
             font-size: 14px;
         }
-        
+
         .alert-success {
             background: rgba(28, 200, 138, 0.15);
             border: 1px solid rgba(28, 200, 138, 0.3);
             color: #1cc88a;
         }
-        
+
         .alert-danger {
             background: rgba(231, 74, 59, 0.15);
             border: 1px solid rgba(231, 74, 59, 0.3);
             color: #e74a3b;
         }
-        
+
         .alert-warning {
             background: rgba(246, 194, 62, 0.15);
             border: 1px solid rgba(246, 194, 62, 0.3);
             color: #f6c23e;
         }
-        
+
         .d-none {
             display: none !important;
         }
-        
+
         /* Particles */
         .particles {
             position: fixed;
@@ -464,7 +487,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             pointer-events: none;
             z-index: 5;
         }
-        
+
         .particle {
             position: absolute;
             width: 2px;
@@ -473,24 +496,27 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             border-radius: 50%;
             animation: particleFloat linear infinite;
         }
-        
+
         @keyframes particleFloat {
             from {
                 transform: translateY(100vh) translateX(0);
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             to {
                 transform: translateY(-20vh) translateX(50px);
                 opacity: 0;
             }
         }
-        
+
         /* Decorative Line */
         .decorative-line {
             width: 50px;
@@ -499,36 +525,37 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             margin: 20px auto 0;
             border-radius: 3px;
         }
-        
+
         /* Responsive */
         @media (max-width: 576px) {
             .luxury-card {
                 border-radius: 24px;
             }
-            
+
             .card-header-luxury {
                 padding: 30px 20px 15px;
             }
-            
+
             .card-body-luxury {
                 padding: 25px 25px 35px;
             }
-            
+
             .logo-wrapper {
                 width: 60px;
                 height: 60px;
             }
-            
+
             .logo-wrapper i {
                 font-size: 30px;
             }
-            
+
             .brand-title {
                 font-size: 24px;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Animated Background -->
     <div class="bg-animation">
@@ -536,10 +563,10 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
         <div class="circle circle-2"></div>
         <div class="circle circle-3"></div>
     </div>
-    
+
     <!-- Particles -->
     <div class="particles" id="particles"></div>
-    
+
     <div class="container">
         <div class="luxury-card" data-aos="fade-up" data-aos-duration="1000">
             <!-- Header -->
@@ -551,63 +578,66 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                 <p class="brand-subtitle">Luxury Ride Experience</p>
                 <div class="decorative-line"></div>
             </div>
-            
+
             <!-- Body -->
             <div class="card-body-luxury">
                 <div class="welcome-message" data-aos="fade-up" data-aos-delay="100">
                     <h3>Welcome Back</h3>
                     <p>Sign in to continue your journey</p>
                 </div>
-                
+
                 <!-- Session Messages -->
                 <?php if (isset($_SESSION['register_success'])): ?>
                     <div class="alert-luxury alert-success" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-check-circle"></i>
                         <div class="alert-content">
-                            <?php echo $_SESSION['register_success']; unset($_SESSION['register_success']); ?>
+                            <?php echo $_SESSION['register_success'];
+                            unset($_SESSION['register_success']); ?>
                         </div>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_SESSION['logout_success'])): ?>
                     <div class="alert-luxury alert-success" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-check-circle"></i>
                         <div class="alert-content">
-                            <?php echo $_SESSION['logout_success']; unset($_SESSION['logout_success']); ?>
+                            <?php echo $_SESSION['logout_success'];
+                            unset($_SESSION['logout_success']); ?>
                         </div>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_SESSION['login_error'])): ?>
                     <div class="alert-luxury alert-danger" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-exclamation-triangle"></i>
                         <div class="alert-content">
-                            <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
+                            <?php echo $_SESSION['login_error'];
+                            unset($_SESSION['login_error']); ?>
                         </div>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'gagal'): ?>
                     <div class="alert-luxury alert-danger" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-exclamation-triangle"></i>
                         <div class="alert-content">Invalid username or password!</div>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'logout'): ?>
                     <div class="alert-luxury alert-success" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-check-circle"></i>
                         <div class="alert-content">You have been logged out successfully!</div>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'belum_login'): ?>
                     <div class="alert-luxury alert-warning" data-aos="fade-up" data-aos-delay="150">
                         <i class="fas fa-exclamation-circle"></i>
                         <div class="alert-content">Please login first!</div>
                     </div>
                 <?php endif; ?>
-                
+
                 <!-- Login Form -->
                 <form action="./login_proses.php" method="POST" id="loginForm">
                     <div class="form-group" data-aos="fade-up" data-aos-delay="200">
@@ -617,7 +647,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                             <input type="text" name="username" id="username" placeholder="Enter your username" required autocomplete="off">
                         </div>
                     </div>
-                    
+
                     <div class="form-group" data-aos="fade-up" data-aos-delay="250">
                         <label class="form-label">PASSWORD</label>
                         <div class="input-wrapper">
@@ -629,7 +659,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                             </button>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn-login" id="loginBtn" data-aos="fade-up" data-aos-delay="350">
                         <span id="btnText">Sign In</span>
                         <span id="btnLoading" class="d-none">
@@ -637,7 +667,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                         </span>
                         <i class="fas fa-arrow-right" id="btnIcon"></i>
                     </button>
-                    
+
                     <div class="register-link" data-aos="fade-up" data-aos-delay="400">
                         <p>Don't have an account? <a href="register.php">Create Account</a></p>
                     </div>
@@ -645,7 +675,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             </div>
         </div>
     </div>
-    
+
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -655,50 +685,50 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             once: true,
             easing: 'ease-out-cubic'
         });
-        
+
         // Generate Particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 50;
-            
+
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
-                
+
                 const left = Math.random() * 100;
                 const duration = 5 + Math.random() * 10;
                 const delay = Math.random() * 15;
                 const size = 1 + Math.random() * 3;
-                
+
                 particle.style.left = left + '%';
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 particle.style.animationDuration = duration + 's';
                 particle.style.animationDelay = delay + 's';
                 particle.style.opacity = 0.3 + Math.random() * 0.5;
-                
+
                 particlesContainer.appendChild(particle);
             }
         }
-        
+
         createParticles();
-        
+
         // ============================================
         // PASSWORD TOGGLE - Di luar (sebelah kanan)
         // ============================================
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
-        
+
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            
+
             // Change icon
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');
         });
-        
+
         // ============================================
         // FORM SUBMISSION - Fix loading tidak ilang
         // ============================================
@@ -707,34 +737,34 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
         const btnText = document.getElementById('btnText');
         const btnLoading = document.getElementById('btnLoading');
         const btnIcon = document.getElementById('btnIcon');
-        
+
         let isSubmitting = false;
-        
+
         loginForm.addEventListener('submit', function(e) {
             // Cek apakah form valid
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            
+
             if (!username || !password) {
                 e.preventDefault();
                 return;
             }
-            
+
             // Cegah double submit
             if (isSubmitting) {
                 e.preventDefault();
                 return;
             }
-            
+
             // Set flag submitting
             isSubmitting = true;
-            
+
             // Tampilkan loading
             loginBtn.disabled = true;
             btnText.classList.add('d-none');
             btnLoading.classList.remove('d-none');
             btnIcon.style.display = 'none';
-            
+
             // Submit form akan tetap berjalan
             // Loading akan hilang jika halaman redirect (tidak perlu dihilangkan manual)
             // TAPI jika terjadi error/redirect gagal, kita perlu reset setelah timeout
@@ -746,22 +776,22 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                 }
             }, 10000); // Timeout 10 detik
         });
-        
+
         function resetButton() {
             loginBtn.disabled = false;
             btnText.classList.remove('d-none');
             btnLoading.classList.add('d-none');
             btnIcon.style.display = 'inline-block';
         }
-        
+
         // Auto focus on username
         document.getElementById('username').focus();
-        
+
         // Clear URL parameters on load
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.pathname);
         }
-        
+
         // Add floating label effect
         const inputs = document.querySelectorAll('.input-wrapper input');
         inputs.forEach(input => {
@@ -772,15 +802,16 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                 this.parentElement.style.transform = 'scale(1)';
             });
         });
-        
+
         // Animated background circles movement
-        let mouseX = 0, mouseY = 0;
+        let mouseX = 0,
+            mouseY = 0;
         let circles = document.querySelectorAll('.circle');
-        
+
         document.addEventListener('mousemove', function(e) {
             mouseX = e.clientX / window.innerWidth;
             mouseY = e.clientY / window.innerHeight;
-            
+
             circles.forEach((circle, index) => {
                 const speed = (index + 1) * 20;
                 const x = (mouseX - 0.5) * speed;
@@ -788,7 +819,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                 circle.style.transform = `translate(${x}px, ${y}px)`;
             });
         });
-        
+
         // Enter key support
         document.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !loginBtn.disabled) {
@@ -801,4 +832,5 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
         });
     </script>
 </body>
+
 </html>

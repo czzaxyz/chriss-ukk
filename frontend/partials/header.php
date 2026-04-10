@@ -54,7 +54,7 @@
 
     // Cek login
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
-        header("Location: ../../pages/auth/login.php?pesan=belum_login");
+        header("Location: ../../chriss-ukk/frontend/auth/login.php?pesan=belum_login");
         exit();
     }
     ?>

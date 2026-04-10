@@ -1,386 +1,139 @@
 <?php
-// AKTIFKAN ERROR REPORTING
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-// Pastikan session_start() di awal
 session_start();
 
-include '../../app.php';
 include '../../partials/header.php';
 $page = 'peminjaman';
 include '../../partials/sidebar.php';
+include '../../app.php';
 
-// Reset pointer query
-$users = mysqli_query($connect, "SELECT id, username FROM users WHERE role = 'peminjam'");
-$barang = mysqli_query($connect, "SELECT id, nama_barang, stok FROM barang WHERE stok > 0");
-$kategori = mysqli_query($connect, "SELECT id, nama_kategori FROM kategori ORDER BY nama_kategori");
+// Ambil data user (peminjam)
+$q_user = mysqli_query($connect, "SELECT id, username, nama_lengkap FROM users WHERE role = 'peminjam' ORDER BY username");
+// Ambil data motor yang tersedia
+$q_motor = mysqli_query($connect, "SELECT * FROM barang WHERE status = 'tersedia' AND jumlah_tersedia > 0 ORDER BY nama_barang");
 ?>
 
+<link rel="stylesheet" href="../motor/style.css">
 
 <style>
-    /* Reset Background Colors */
-    body, #main, .container-fluid, .page-body-wrapper {
-        background-color: #f8f9fc !important;
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr;
     }
-    
-    #main {
-        margin-left: 260px;
-        margin-top: 70px;
-        padding: 20px;
-        width: calc(100% - 260px);
-        box-sizing: border-box;
-        background-color: #f8f9fc !important;
-    }
-
-    .card {
-        border-radius: 12px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
-        border: 1px solid #e3e6f0 !important;
-        background-color: #ffffff !important;
-        margin-bottom: 20px;
-    }
-
-    .card-header {
-        background-color: #ffffff !important;
-        border-bottom: 1px solid #e3e6f0 !important;
-        padding: 20px 25px !important;
-        border-radius: 12px 12px 0 0 !important;
-    }
-
-    .card-body {
-        padding: 25px !important;
-        background-color: #ffffff !important;
-    }
-
-    .page-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: #4e73df;
-        margin-bottom: 0;
-    }
-
-    .btn-primary {
-        background-color: #4e73df !important;
-        border-color: #4e73df !important;
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .btn-success {
-        background-color: #1cc88a !important;
-        border-color: #1cc88a !important;
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .form-label {
-        font-weight: 600;
-        color: #5a5c69;
-        margin-bottom: 8px;
-    }
-
-    .form-control, .form-select {
-        border: 1px solid #d1d3e2 !important;
-        border-radius: 0.35rem !important;
-        padding: 0.75rem 1rem !important;
-        font-size: 0.9rem !important;
-        background-color: #ffffff !important;
-        color: #000000 !important;
-    }
-
-    .form-control:focus, .form-select:focus {
-        border-color: #bac8f3 !important;
-        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25) !important;
-    }
-
-    .form-text {
-        color: #858796 !important;
-        font-size: 0.85rem;
-        margin-top: 5px;
-    }
-
-    .alert {
-        border-radius: 8px;
-        border: none;
-        padding: 15px 20px;
-        margin-bottom: 20px;
-    }
-
-    .alert-danger {
-        background-color: #f8d7da !important;
-        color: #721c24 !important;
-        border-left: 4px solid #e74a3b !important;
-    }
-
-    .alert-success {
-        background-color: #d4edda !important;
-        color: #155724 !important;
-        border-left: 4px solid #1cc88a !important;
-    }
-
-    .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 2px solid #f0f2f5;
-    }
-
-    @media (max-width: 768px) {
-        #main {
-            margin-left: 0;
-            width: 100%;
-            padding: 15px;
-        }
-        
-        .header-container {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 15px;
-        }
-        
-        .page-title {
-            font-size: 1.5rem;
-        }
-    }
+}
 </style>
 
-<div class="container-fluid page-body-wrapper">
-    <div id="main" class="p-4">
-        <div class="card">
-            <div class="card-header">
-                <div class="header-container">
-                    <h4 class="fw-bold text-primary page-title">
-                        <i class="fas fa-plus-circle"></i> Tambah Data Peminjaman
-                    </h4>
-                    <a href="./index.php" class="btn btn-primary">
-                        <i class="fas fa-arrow-left"></i> Kembali
-                    </a>
-                </div>
+<div id="main">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-icon">
+                <i class="fas fa-plus-circle"></i>
             </div>
-            
-            <div class="card-body">
-                <!-- Tampilkan pesan error/success -->
-                <?php if (isset($_SESSION['error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <?php
-                        echo $_SESSION['error'];
-                        unset($_SESSION['error']);
-                        ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        <?php
-                        echo $_SESSION['success'];
-                        unset($_SESSION['success']);
-                        ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
-                
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <form action="../../action/peminjaman/store.php" method="POST" class="needs-validation" novalidate>
-                            <div class="mb-4">
-                                <label for="kode_peminjaman" class="form-label">Kode Peminjaman *</label>
-                                <input type="text" name="kode_peminjaman" class="form-control" id="kode_peminjaman"
-                                    placeholder="Contoh: PINJ-001" required
-                                    value="<?php echo 'PINJ-' . date('Ymd') . sprintf('%03d', rand(1, 999)); ?>">
-                                <div class="invalid-feedback">Harap isi kode peminjaman</div>
-                                <div class="form-text">Kode peminjaman harus unik</div>
-                            </div>
-                            
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <label for="user_id" class="form-label">Peminjam *</label>
-                                    <select name="user_id" class="form-select" id="user_id" required>
-                                        <option value="">Pilih Peminjam</option>
-                                        <?php 
-                                        if ($users && mysqli_num_rows($users) > 0) {
-                                            while($user = mysqli_fetch_assoc($users)): 
-                                        ?>
-                                            <option value="<?= $user['id'] ?>" <?= (isset($_POST['user_id']) && $_POST['user_id'] == $user['id']) ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($user['username']) ?>
-                                            </option>
-                                        <?php 
-                                            endwhile;
-                                        } else {
-                                            echo '<option value="" disabled>-- Tidak ada peminjam --</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <div class="invalid-feedback">Harap pilih peminjam</div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="kategori_id" class="form-label">Kategori *</label>
-                                    <select name="kategori_id" class="form-select" id="kategori_id" required>
-                                        <option value="">Pilih Kategori</option>
-                                        <?php 
-                                        if ($kategori && mysqli_num_rows($kategori) > 0) {
-                                            while($kat = mysqli_fetch_assoc($kategori)): 
-                                        ?>
-                                            <option value="<?= $kat['id'] ?>" <?= (isset($_POST['kategori_id']) && $_POST['kategori_id'] == $kat['id']) ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($kat['nama_kategori']) ?>
-                                            </option>
-                                        <?php 
-                                            endwhile;
-                                        } else {
-                                            echo '<option value="" disabled>-- Tidak ada kategori --</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <div class="invalid-feedback">Harap pilih kategori</div>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <label for="barang_id" class="form-label">Barang *</label>
-                                    <select name="barang_id" class="form-select" id="barang_id" required>
-                                        <option value="">Pilih Barang</option>
-                                        <?php 
-                                        if ($barang && mysqli_num_rows($barang) > 0) {
-                                            while($item = mysqli_fetch_assoc($barang)): 
-                                        ?>
-                                            <option value="<?= $item['id'] ?>" data-stok="<?= $item['stok'] ?>" <?= (isset($_POST['barang_id']) && $_POST['barang_id'] == $item['id']) ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($item['nama_barang']) ?> (Stok: <?= $item['stok'] ?>)
-                                            </option>
-                                        <?php 
-                                            endwhile;
-                                        } else {
-                                            echo '<option value="" disabled>-- Tidak ada barang --</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <div class="invalid-feedback">Harap pilih barang</div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="jumlah" class="form-label">Jumlah *</label>
-                                    <input type="number" name="jumlah" class="form-control" id="jumlah"
-                                        placeholder="Masukkan jumlah" required min="1" max="1">
-                                    <div class="invalid-feedback">Jumlah harus lebih dari 0</div>
-                                    <div class="form-text" id="stok-info">Maksimum: 1</div>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <label for="tgl_pinjam" class="form-label">Tanggal Pinjam *</label>
-                                    <input type="date" name="tgl_pinjam" class="form-control" id="tgl_pinjam"
-                                        value="<?= date('Y-m-d') ?>" required>
-                                    <div class="invalid-feedback">Harap pilih tanggal pinjam</div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="tgl_kembali_rencana" class="form-label">Tanggal Kembali (Rencana) *</label>
-                                    <input type="date" name="tgl_kembali_rencana" class="form-control" id="tgl_kembali_rencana" required>
-                                    <div class="invalid-feedback">Harap pilih tanggal kembali rencana</div>
-                                    <div class="form-text" id="lama_pinjam_info">Lama pinjam: 0 hari</div>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex justify-content-between mt-5">
-                                <a href="./index.php" class="btn btn-outline-secondary">
-                                    <i class="fas fa-times"></i> Batal
-                                </a>
-                                <button type="submit" class="btn btn-success" name="tombol">
-                                    <i class="fas fa-plus"></i> Tambah Peminjaman
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <h2>Tambah Peminjaman Baru</h2>
+            <p>Isi data peminjaman dengan lengkap</p>
         </div>
-        <?php include '../../partials/footer.php'; ?>
+        <div class="form-body">
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+            <?php endif; ?>
+            
+            <form action="../../action/peminjaman/store.php" method="POST">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-user"></i> Peminjam *</div>
+                        <select name="user_id" class="form-select" required>
+                            <option value="">Pilih Peminjam</option>
+                            <?php while($user = mysqli_fetch_assoc($q_user)): ?>
+                                <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['username']) ?> (<?= htmlspecialchars($user['nama_lengkap']) ?>)</option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-motorcycle"></i> Motor *</div>
+                        <select name="barang_id" class="form-select" required>
+                            <option value="">Pilih Motor</option>
+                            <?php while($motor = mysqli_fetch_assoc($q_motor)): ?>
+                                <option value="<?= $motor['id'] ?>" data-harga="<?= $motor['harga_sewa_perhari'] ?>">
+                                    <?= htmlspecialchars($motor['nama_barang']) ?> (<?= htmlspecialchars($motor['kode_barang']) ?>) - Rp <?= number_format($motor['harga_sewa_perhari'], 0, ',', '.') ?> /hari | Stok: <?= $motor['jumlah_tersedia'] ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-boxes"></i> Jumlah *</div>
+                        <input type="number" name="jumlah" class="form-control" value="1" min="1" required>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-calendar"></i> Tanggal Pinjam *</div>
+                        <input type="date" name="tgl_pinjam" class="form-control" required>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-calendar-check"></i> Tanggal Kembali *</div>
+                        <input type="date" name="tgl_kembali" class="form-control" required>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-money-bill"></i> Total Harga</div>
+                        <div class="form-control" id="total_harga_display" style="background: #f0f2f5; font-weight: bold;">Rp 0</div>
+                        <input type="hidden" name="total_harga" id="total_harga_input" value="0">
+                    </div>
+                </div>
+                
+                <div class="info-item" style="margin-top: 0;">
+                    <div class="info-label"><i class="fas fa-align-left"></i> Keterangan</div>
+                    <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan tambahan..."></textarea>
+                </div>
+                
+                <div class="detail-footer">
+                    <a href="index.php" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Batal
+                    </a>
+                    <button type="submit" name="tombol" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Peminjaman
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<?php include '../../partials/script.php'; ?>
-
 <script>
-// Validasi form
-(function() {
-    'use strict';
-    var forms = document.querySelectorAll('.needs-validation');
-    Array.prototype.slice.call(forms).forEach(function(form) {
-        form.addEventListener('submit', function(event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
-    });
-})();
-
-// Update max jumlah berdasarkan stok barang
-document.getElementById('barang_id').addEventListener('change', function() {
-    const selectedOption = this.options[this.selectedIndex];
-    const stok = selectedOption.getAttribute('data-stok');
-    const jumlahInput = document.getElementById('jumlah');
-    const stokInfo = document.getElementById('stok-info');
+    // Hitung total harga
+    const hargaMotor = {};
+    <?php 
+    mysqli_data_seek($q_motor, 0);
+    while($motor = mysqli_fetch_assoc($q_motor)): 
+    ?>
+        hargaMotor[<?= $motor['id'] ?>] = <?= $motor['harga_sewa_perhari'] ?>;
+    <?php endwhile; ?>
     
-    if (stok && stok > 0) {
-        jumlahInput.max = stok;
-        stokInfo.textContent = 'Maksimum: ' + stok;
-    } else {
-        jumlahInput.max = 1;
-        stokInfo.textContent = 'Maksimum: 1';
-        jumlahInput.value = 1;
-    }
-});
-
-// Hitung lama pinjam
-function hitungLamaPinjam() {
-    const tglPinjam = document.getElementById('tgl_pinjam').value;
-    const tglKembali = document.getElementById('tgl_kembali_rencana').value;
-    const infoElement = document.getElementById('lama_pinjam_info');
-    
-    if (tglPinjam && tglKembali) {
-        const tgl1 = new Date(tglPinjam);
-        const tgl2 = new Date(tglKembali);
-        const diffTime = Math.abs(tgl2 - tgl1);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    function hitungTotal() {
+        const motorId = document.querySelector('select[name="barang_id"]').value;
+        const jumlah = parseInt(document.querySelector('input[name="jumlah"]').value) || 0;
+        const tglPinjam = new Date(document.querySelector('input[name="tgl_pinjam"]').value);
+        const tglKembali = new Date(document.querySelector('input[name="tgl_kembali"]').value);
         
-        infoElement.textContent = 'Lama pinjam: ' + diffDays + ' hari';
+        if (motorId && jumlah > 0 && tglPinjam && tglKembali && tglKembali > tglPinjam) {
+            const hari = Math.ceil((tglKembali - tglPinjam) / (1000 * 60 * 60 * 24));
+            const total = hari * jumlah * (hargaMotor[motorId] || 0);
+            document.getElementById('total_harga_display').innerHTML = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('total_harga_input').value = total;
+        } else {
+            document.getElementById('total_harga_display').innerHTML = 'Rp 0';
+            document.getElementById('total_harga_input').value = 0;
+        }
     }
-}
-
-document.getElementById('tgl_pinjam').addEventListener('change', hitungLamaPinjam);
-document.getElementById('tgl_kembali_rencana').addEventListener('change', hitungLamaPinjam);
-
-// Set tanggal kembali minimal besok
-document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
     
-    const tglPinjamInput = document.getElementById('tgl_pinjam');
-    const tglKembaliInput = document.getElementById('tgl_kembali_rencana');
-    
-    tglPinjamInput.min = today.toISOString().split('T')[0];
-    tglKembaliInput.min = tomorrow.toISOString().split('T')[0];
-    
-    // Set default tgl kembali rencana 3 hari dari sekarang
-    const defaultKembali = new Date(today);
-    defaultKembali.setDate(defaultKembali.getDate() + 3);
-    tglKembaliInput.value = defaultKembali.toISOString().split('T')[0];
-    
-    hitungLamaPinjam();
-});
+    document.querySelector('select[name="barang_id"]').addEventListener('change', hitungTotal);
+    document.querySelector('input[name="jumlah"]').addEventListener('input', hitungTotal);
+    document.querySelector('input[name="tgl_pinjam"]').addEventListener('change', hitungTotal);
+    document.querySelector('input[name="tgl_kembali"]').addEventListener('change', hitungTotal);
 </script>
+
+<?php include '../../partials/footer.php'; include '../../partials/script.php'; ?>
