@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="single_footer">
-                    <a href="index.php"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
+                    <a href="./"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
                     <p>Sistem Peminjaman Motor terpercaya dengan berbagai pilihan motor berkualitas. Sewa motor mudah, cepat, dan aman.</p>
                     <div class="social_profile">
                         <ul>

@@ -16,7 +16,7 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
         <div class="row">
             <div class="col-20 align-self-center">
                 <div class="site-logo">
-                    <a href="index.php"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
+                    <a href="./"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
                 </div>
             </div><!--- END Col -->
 
@@ -50,7 +50,7 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
                         <span class="header-btn">
                             <i class="fa fa-user-circle"></i> Halo, <?= htmlspecialchars($username) ?>
                         </span>
-                        <a href="../../chriss-ukk/frontend/auth/logout.php" class="btn_one btn-logout">
+                        <a href="logout" class="btn_one btn-logout">
                             <i class="fa fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -79,7 +79,7 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
                 <?php endif; ?>
                 <li><a href="contact">Contact</a></li>
                 <?php if ($isLoggedIn): ?>
-                    <li><a href="../../chriss-ukk/frontend/auth/logout.php">Logout</a></li>
+                    <li><a href="logout">Logout</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Sign In</a></li>
                     <li><a href="register.php">Sign Up</a></li>
