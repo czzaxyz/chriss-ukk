@@ -5,5 +5,5 @@ session_unset();
 session_destroy();
 
 // Redirect dengan alert JavaScript
-echo "<script>alert('Logout berhasil! Sampai jumpa kembali.');window.location='https://web.craft.co.id/login';</script>";
+echo "<script>alert('Logout berhasil! Sampai jumpa kembali.');window.location='../../login';</script>";
 exit;

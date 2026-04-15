@@ -4,9 +4,7 @@
         <div class="row">
             <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="single_footer">
-                    <a href="https://web.craft.co.id">
-    <img src="https://web.craft.co.id/frontend/templates/assets/img/logo.png" alt="Logo" width="150" height="50">
-</a>
+                    <a href="./"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
                     <p>Sistem Peminjaman Motor terpercaya dengan berbagai pilihan motor berkualitas. Sewa motor mudah, cepat, dan aman.</p>
                     <div class="social_profile">
                         <ul>
@@ -23,10 +21,10 @@
                 <div class="single_footer">
                     <h4>Menu</h4>
                     <ul>
-                        <li><a href="./">Home</a></li>
-                        <li><a href="about">Motor</a></li>
-                        <li><a href="about">About Us</a></li>
-                        <li><a href="contact">Contact</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="motor.php">Motor</a></li>
+                        <li><a href="about.php">About Us</a></li>
+                        <li><a href="contact.php">Contact</a></li>
                     </ul>
                 </div>
             </div><!--- END COL -->
@@ -35,10 +33,10 @@
                 <div class="single_footer">
                     <h4>Informasi</h4>
                     <ul>
-                        <li><a href="syarat-ketentuan">Syarat & Ketentuan</a></li>
-                        <li><a href="kebijakan-privasi">Kebijakan Privasi</a></li>
-                        <li><a href="faq">FAQ</a></li>
-                        <li><a href="cara-peminjaman">Cara Peminjaman</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Cara Peminjaman</a></li>
                     </ul>
                 </div>
             </div><!--- END COL -->

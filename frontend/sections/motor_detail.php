@@ -13,53 +13,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['st
     exit;
 }
 
-// Proses peminjaman jika form disubmit
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sewa_motor'])) {
-    $user_id = $_SESSION['user_id'];
-    $barang_id = (int)$_POST['barang_id'];
-    $jumlah = (int)$_POST['jumlah'];
-    $tgl_pinjam = mysqli_real_escape_string($connect, $_POST['tgl_pinjam']);
-    $tgl_kembali = mysqli_real_escape_string($connect, $_POST['tgl_kembali']);
-    $keterangan = mysqli_real_escape_string($connect, $_POST['keterangan']);
-    
-    // Cek stok
-    $cek_stok = mysqli_query($connect, "SELECT stok, harga_sewa_perhari, slug FROM barang WHERE id = $barang_id");
-    $motor = mysqli_fetch_assoc($cek_stok);
-    $motor_slug = $motor['slug'];
-    
-    if ($motor['stok'] >= $jumlah) {
-        $lama = (strtotime($tgl_kembali) - strtotime($tgl_pinjam)) / (60 * 60 * 24);
-        $total_harga = $lama * $jumlah * $motor['harga_sewa_perhari'];
-        
-        // Generate kode peminjaman
-        $kode = "PINJ-" . date('Ymd') . "-" . strtoupper(substr(uniqid(), -5));
-        
-        $query = "INSERT INTO peminjaman (kode_peminjaman, user_id, barang_id, jumlah, tgl_pinjam, tgl_kembali_rencana, keterangan, status, total_harga, lama_pinjam, created_at) 
-                  VALUES ('$kode', $user_id, $barang_id, $jumlah, '$tgl_pinjam', '$tgl_kembali', '$keterangan', 'pending', $total_harga, $lama, NOW())";
-        
-        if (mysqli_query($connect, $query)) {
-            // Redirect kembali ke halaman detail motor dengan alert sukses
-            echo "<script>
-                alert('✅ Peminjaman berhasil diajukan! Silakan cek ke halaman Peminjaman Saya.');
-                window.location.href = '$motor_slug';
-            </script>";
-            exit;
-        } else {
-            echo "<script>
-                alert('❌ Gagal mengajukan peminjaman: " . addslashes(mysqli_error($connect)) . "');
-                window.history.back();
-            </script>";
-            exit;
-        }
-    } else {
-        echo "<script>
-            alert('❌ Stok tidak mencukupi! Tersedia: {$motor['stok']} unit');
-            window.history.back();
-        </script>";
-        exit;
-    }
-}
-
 // Ambil parameter (bisa id atau slug)
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $slug = isset($_GET['slug']) ? mysqli_real_escape_string($connect, $_GET['slug']) : '';
@@ -106,7 +59,7 @@ if (!$motor) {
         <div class="row">
             <div class="col-lg-6">
                 <div class="motor-image">
-                    <img src="https://imgcdn.oto.com/medium/gallery/exterior/178/3086/wmoto-morbius-slant-front-view-full-image-178744.jpg" class="img-fluid" alt="<?= htmlspecialchars($motor['nama_barang']) ?>">
+                    <img src="assets/img/course/default-motor.jpg" class="img-fluid" alt="<?= htmlspecialchars($motor['nama_barang']) ?>">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -165,7 +118,7 @@ if (!$motor) {
             <h3><i class="fas fa-motorcycle"></i> Form Peminjaman Motor</h3>
             <span class="close" onclick="closeRentModal()">&times;</span>
         </div>
-        <form method="POST" action="" id="rentForm">
+        <form method="POST" action="peminjaman.php" id="rentForm">
             <input type="hidden" name="barang_id" id="barang_id">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Nama Peminjam</label>
@@ -494,7 +447,6 @@ function openRentModal(id, name, price, stok) {
     document.getElementById('tgl_pinjam').min = today;
     document.getElementById('tgl_pinjam').value = today;
     document.getElementById('tgl_kembali').min = today;
-    document.getElementById('tgl_kembali').value = '';
     document.getElementById('jumlah').max = stok;
     document.getElementById('jumlah').value = 1;
     
@@ -505,6 +457,7 @@ function openRentModal(id, name, price, stok) {
 function closeRentModal() {
     document.getElementById('rentModal').style.display = 'none';
 }
+
 function hitungTotal() {
     const tglPinjam = document.getElementById('tgl_pinjam').value;
     const tglKembali = document.getElementById('tgl_kembali').value;
@@ -523,7 +476,6 @@ document.getElementById('tgl_pinjam')?.addEventListener('change', hitungTotal);
 document.getElementById('tgl_kembali')?.addEventListener('change', hitungTotal);
 document.getElementById('jumlah')?.addEventListener('input', hitungTotal);
 
-// Tutup modal klik di luar
 window.onclick = function(event) {
     const modal = document.getElementById('rentModal');
     if (event.target == modal) {

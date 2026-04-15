@@ -5,13 +5,13 @@ session_start();
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     switch ($_SESSION['role']) {
         case 'admin':
-            header("Location: https://web.craft.co.id");
+            header("Location: /chriss-ukk/");
             exit();
         case 'petugas':
-            header("Location: https://web.craft.co.id");
+            header("Location: /chriss-ukk/");
             exit();
         case 'peminjam':
-            header("Location: https://web.craft.co.id");
+            header("Location: /chriss-ukk/");
             exit();
     }
 }
@@ -24,7 +24,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Login | Sistem Peminjaman Motor</title>
 
-    <link rel="icon" type="image/png" href="https://web.craft.co.idfrontend/templates/assets/img/favicon.png" />
+    <link rel="icon" type="image/png" href="/chriss-ukk/frontend/templates/assets/img/favicon.png" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
