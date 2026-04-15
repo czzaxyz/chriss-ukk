@@ -4,14 +4,14 @@ include '../../config/koneksi.php'; // Path ke app.php di root
 
 // Validasi method POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header("Location: ../login");
+    header("Location: https://web.craft.co.id");
     exit();
 }
 
 // Validasi input
 if (empty($_POST['username']) || empty($_POST['password'])) {
     $_SESSION['login_error'] = "Username dan password wajib diisi!";
-    header("Location: ../login?pesan=gagal");
+    header("Location: https://web.craft.co.id?pesan=gagal");
     exit();
 }
 
@@ -23,7 +23,7 @@ $qUser = mysqli_query($connect, "SELECT * FROM users WHERE username='$username' 
 
 if (!$qUser) {
     $_SESSION['login_error'] = "Terjadi kesalahan pada server!";
-    header("Location: ../login?pesan=gagal");
+    header("Location: https://web.craft.co.id?pesan=gagal");
     exit();
 }
 
@@ -42,32 +42,32 @@ if (mysqli_num_rows($qUser) > 0) {
         // Redirect berdasarkan role
         switch($data['role']) {
             case 'admin':
-                header("Location: /chriss-ukk/");
+                header("Location: https://web.craft.co.id/");
                 exit();
                 
             case 'petugas':
-                header("Location: /chriss-ukk/");
+                header("Location: https://web.craft.co.id/");
                 exit();
                 
             case 'peminjam':
-                header("Location: /chriss-ukk/");
+                header("Location: https://web.craft.co.id/");
                 exit();
                 
             default:
                 $_SESSION['login_error'] = "Role tidak valid! Hubungi administrator.";
-                header("Location: ../login?pesan=gagal");
+                header("Location: https://web.craft.co.id?pesan=gagal");
                 exit();
         }
     } else {
         // Password salah
         $_SESSION['login_error'] = "Password salah! Silakan coba lagi.";
-        header("Location: ../login?pesan=gagal");
+        header("Location: https://web.craft.co.id?pesan=gagal");
         exit();
     }
 } else {
     // Username tidak ditemukan
     $_SESSION['login_error'];
-    header("Location: ../login?pesan=gagal");
+    header("Location: https://web.craft.co.id?pesan=gagal");
     exit();
 }
 ?>

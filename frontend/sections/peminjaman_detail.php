@@ -28,7 +28,7 @@ $user_id = $_SESSION['user_id'];
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $slug = isset($_GET['slug']) ? mysqli_real_escape_string($connect, $_GET['slug']) : '';
 
-// Query detail peminjaman (pastikan milik user yang login)
+// Query detail peminjaman
 if (!empty($slug)) {
     $query = mysqli_query($connect, "SELECT p.*, b.nama_barang, b.kode_barang, b.merk, b.tahun, b.harga_sewa_perhari, b.deskripsi as motor_deskripsi, k.nama_kategori
         FROM peminjaman p 
@@ -54,16 +54,52 @@ if (!$peminjaman) {
 
 // Hitung total bayar
 $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
+
+// Tentukan class status
+$status_class = '';
+$status_text = '';
+$status_icon = '';
+switch ($peminjaman['status']) {
+    case 'pending':
+        $status_class = 'status-pending';
+        $status_text = 'Menunggu Konfirmasi';
+        $status_icon = 'fas fa-clock';
+        break;
+    case 'disetujui':
+        $status_class = 'status-disetujui';
+        $status_text = 'Disetujui';
+        $status_icon = 'fas fa-check-circle';
+        break;
+    case 'dipinjam':
+        $status_class = 'status-dipinjam';
+        $status_text = 'Sedang Dipinjam';
+        $status_icon = 'fas fa-motorcycle';
+        break;
+    case 'selesai':
+        $status_class = 'status-selesai';
+        $status_text = 'Selesai';
+        $status_icon = 'fas fa-check-double';
+        break;
+    case 'ditolak':
+        $status_class = 'status-ditolak';
+        $status_text = 'Ditolak';
+        $status_icon = 'fas fa-times-circle';
+        break;
+    default:
+        $status_class = 'status-pending';
+        $status_text = 'Menunggu Konfirmasi';
+        $status_icon = 'fas fa-clock';
+}
 ?>
 
 <!-- START SECTION TOP -->
 <section class="section-top">
     <div class="container">
         <div class="col-lg-10 offset-lg-1 text-center">
-            <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+            <div class="section-top-title wow fadeInRight">
                 <h1>Detail Peminjaman</h1>
                 <ul>
-                    <li><a href="./">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="peminjaman">Peminjaman Saya</a></li>
                     <li> / Detail</li>
                 </ul>
@@ -78,100 +114,74 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <!-- Status Card -->
-                <div class="status-card status-<?= $peminjaman['status'] ?>">
-                    <div class="status-icon">
-                        <?php 
-                        switch ($peminjaman['status']) {
-                            case 'pending':
-                                echo '<i class="fas fa-clock"></i>';
-                                $status_text = 'Menunggu Konfirmasi';
-                                break;
-                            case 'disetujui':
-                                echo '<i class="fas fa-check-circle"></i>';
-                                $status_text = 'Disetujui';
-                                break;
-                            case 'dipinjam':
-                                echo '<i class="fas fa-motorcycle"></i>';
-                                $status_text = 'Sedang Dipinjam';
-                                break;
-                            case 'selesai':
-                                echo '<i class="fas fa-check-double"></i>';
-                                $status_text = 'Selesai';
-                                break;
-                            case 'ditolak':
-                                echo '<i class="fas fa-times-circle"></i>';
-                                $status_text = 'Ditolak';
-                                break;
-                            default:
-                                echo '<i class="fas fa-clock"></i>';
-                                $status_text = 'Menunggu Konfirmasi';
-                        }
-                        ?>
+                <!-- Header Card - Seperti detail motor -->
+                <div class="detail-header-card">
+                    <div class="header-icon">
+                        <i class="fas fa-receipt"></i>
                     </div>
-                    <div class="status-info">
-                        <h3><?= $status_text ?></h3>
-                        <p>Kode Peminjaman: <strong><?= htmlspecialchars($peminjaman['kode_peminjaman']) ?></strong></p>
+                    <h2><?= htmlspecialchars($peminjaman['kode_peminjaman']) ?></h2>
+                    <div class="header-badge">
+                        <span class="status-badge-large <?= $status_class ?>">
+                            <i class="<?= $status_icon ?>"></i> <?= $status_text ?>
+                        </span>
                     </div>
                 </div>
 
-                <!-- Detail Card -->
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <h3><i class="fas fa-info-circle"></i> Informasi Peminjaman</h3>
+                <!-- Informasi Peminjaman Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>Informasi Peminjaman</h3>
                     </div>
-                    <div class="detail-body">
-                        <div class="info-row">
-                            <div class="info-label">Kode Peminjaman</div>
-                            <div class="info-value"><?= htmlspecialchars($peminjaman['kode_peminjaman']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Tanggal Peminjaman</div>
-                            <div class="info-value"><?= date('d F Y', strtotime($peminjaman['created_at'])) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Status</div>
-                            <div class="info-value">
-                                <span class="status-badge status-<?= $peminjaman['status'] ?>">
-                                    <?= ucfirst($peminjaman['status']) ?>
-                                </span>
+                    <div class="info-card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Kode Peminjaman</div>
+                                <div class="info-value"><?= htmlspecialchars($peminjaman['kode_peminjaman']) ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Tanggal Peminjaman</div>
+                                <div class="info-value"><?= date('d F Y H:i', strtotime($peminjaman['created_at'])) ?></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Motor Card -->
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <h3><i class="fas fa-motorcycle"></i> Informasi Motor</h3>
+                <!-- Informasi Motor Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-motorcycle"></i>
+                        <h3>Informasi Motor</h3>
                     </div>
-                    <div class="detail-body">
-                        <div class="info-row">
-                            <div class="info-label">Nama Motor</div>
-                            <div class="info-value"><?= htmlspecialchars($peminjaman['nama_barang']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Kode Motor</div>
-                            <div class="info-value"><?= htmlspecialchars($peminjaman['kode_barang']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Kategori</div>
-                            <div class="info-value"><?= htmlspecialchars($peminjaman['nama_kategori'] ?? '-') ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Merk</div>
-                            <div class="info-value"><?= htmlspecialchars($peminjaman['merk'] ?? '-') ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Tahun</div>
-                            <div class="info-value"><?= $peminjaman['tahun'] ?? '-' ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Harga Sewa/Hari</div>
-                            <div class="info-value">Rp <?= number_format($peminjaman['harga_sewa_perhari'], 0, ',', '.') ?></div>
+                    <div class="info-card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Nama Motor</div>
+                                <div class="info-value"><strong><?= htmlspecialchars($peminjaman['nama_barang']) ?></strong></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Kode Motor</div>
+                                <div class="info-value"><?= htmlspecialchars($peminjaman['kode_barang']) ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Kategori</div>
+                                <div class="info-value"><?= htmlspecialchars($peminjaman['nama_kategori'] ?? '-') ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Merk</div>
+                                <div class="info-value"><?= htmlspecialchars($peminjaman['merk'] ?? '-') ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Tahun</div>
+                                <div class="info-value"><?= $peminjaman['tahun'] ?? '-' ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Harga Sewa/Hari</div>
+                                <div class="info-value price">Rp <?= number_format($peminjaman['harga_sewa_perhari'], 0, ',', '.') ?></div>
+                            </div>
                         </div>
                         <?php if (!empty($peminjaman['motor_deskripsi'])): ?>
-                        <div class="info-row">
+                        <div class="info-item full-width">
                             <div class="info-label">Deskripsi Motor</div>
                             <div class="info-value"><?= nl2br(htmlspecialchars($peminjaman['motor_deskripsi'])) ?></div>
                         </div>
@@ -180,35 +190,38 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
                 </div>
 
                 <!-- Detail Peminjaman Card -->
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <h3><i class="fas fa-calendar-alt"></i> Detail Peminjaman</h3>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Detail Peminjaman</h3>
                     </div>
-                    <div class="detail-body">
-                        <div class="info-row">
-                            <div class="info-label">Tanggal Pinjam</div>
-                            <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_pinjam'])) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Tanggal Kembali Rencana</div>
-                            <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_kembali_rencana'])) ?></div>
-                        </div>
-                        <?php if ($peminjaman['tgl_kembali_aktual']): ?>
-                        <div class="info-row">
-                            <div class="info-label">Tanggal Kembali Aktual</div>
-                            <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_kembali_aktual'])) ?></div>
-                        </div>
-                        <?php endif; ?>
-                        <div class="info-row">
-                            <div class="info-label">Lama Pinjam</div>
-                            <div class="info-value"><?= $peminjaman['lama_pinjam'] ?> Hari</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Jumlah Motor</div>
-                            <div class="info-value"><?= $peminjaman['jumlah'] ?> Unit</div>
+                    <div class="info-card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Tanggal Pinjam</div>
+                                <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_pinjam'])) ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Tanggal Kembali Rencana</div>
+                                <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_kembali_rencana'])) ?></div>
+                            </div>
+                            <?php if ($peminjaman['tgl_kembali_aktual']): ?>
+                            <div class="info-item">
+                                <div class="info-label">Tanggal Kembali Aktual</div>
+                                <div class="info-value"><?= date('d F Y', strtotime($peminjaman['tgl_kembali_aktual'])) ?></div>
+                            </div>
+                            <?php endif; ?>
+                            <div class="info-item">
+                                <div class="info-label">Lama Pinjam</div>
+                                <div class="info-value"><?= $peminjaman['lama_pinjam'] ?> Hari</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Jumlah Motor</div>
+                                <div class="info-value"><?= $peminjaman['jumlah'] ?> Unit</div>
+                            </div>
                         </div>
                         <?php if (!empty($peminjaman['keterangan'])): ?>
-                        <div class="info-row">
+                        <div class="info-item full-width">
                             <div class="info-label">Keterangan Peminjaman</div>
                             <div class="info-value"><?= nl2br(htmlspecialchars($peminjaman['keterangan'])) ?></div>
                         </div>
@@ -217,70 +230,75 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
                 </div>
 
                 <!-- Pembayaran Card -->
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <h3><i class="fas fa-money-bill-wave"></i> Detail Pembayaran</h3>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>Detail Pembayaran</h3>
                     </div>
-                    <div class="detail-body">
-                        <div class="info-row">
-                            <div class="info-label">Total Harga Sewa</div>
-                            <div class="info-value">Rp <?= number_format($peminjaman['total_harga'] ?? 0, 0, ',', '.') ?></div>
-                        </div>
-                        <?php if (($peminjaman['denda'] ?? 0) > 0): ?>
-                        <div class="info-row">
-                            <div class="info-label">Denda</div>
-                            <div class="info-value text-danger">Rp <?= number_format($peminjaman['denda'], 0, ',', '.') ?></div>
-                        </div>
-                        <?php endif; ?>
-                        <div class="info-row total-row">
-                            <div class="info-label">Total Bayar</div>
-                            <div class="info-value total-price">Rp <?= number_format($total_bayar, 0, ',', '.') ?></div>
+                    <div class="info-card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Total Harga Sewa</div>
+                                <div class="info-value price">Rp <?= number_format($peminjaman['total_harga'] ?? 0, 0, ',', '.') ?></div>
+                            </div>
+                            <?php if (($peminjaman['denda'] ?? 0) > 0): ?>
+                            <div class="info-item">
+                                <div class="info-label">Denda</div>
+                                <div class="info-value denda">Rp <?= number_format($peminjaman['denda'], 0, ',', '.') ?></div>
+                            </div>
+                            <?php endif; ?>
+                            <div class="info-item total">
+                                <div class="info-label">Total Bayar</div>
+                                <div class="info-value total-price">Rp <?= number_format($total_bayar, 0, ',', '.') ?></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Kondisi Pengembalian Card (jika sudah selesai) -->
+                <!-- Informasi Pengembalian Card (jika sudah selesai) -->
                 <?php if ($peminjaman['status'] == 'selesai'): ?>
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <h3><i class="fas fa-undo-alt"></i> Informasi Pengembalian</h3>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-undo-alt"></i>
+                        <h3>Informasi Pengembalian</h3>
                     </div>
-                    <div class="detail-body">
-                        <div class="info-row">
-                            <div class="info-label">Kondisi Motor</div>
-                            <div class="info-value">
-                                <?php 
-                                $kondisi_class = '';
-                                switch ($peminjaman['kondisi']) {
-                                    case 'baik': $kondisi_class = 'kondisi-baik'; break;
-                                    case 'rusak_ringan': $kondisi_class = 'kondisi-rusak-ringan'; break;
-                                    case 'rusak_berat': $kondisi_class = 'kondisi-rusak-berat'; break;
-                                    default: $kondisi_class = 'kondisi-baik';
-                                }
-                                ?>
-                                <span class="kondisi-badge <?= $kondisi_class ?>">
-                                    <?= str_replace('_', ' ', ucfirst($peminjaman['kondisi'] ?? 'Baik')) ?>
-                                </span>
+                    <div class="info-card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Kondisi Motor</div>
+                                <div class="info-value">
+                                    <?php 
+                                    $kondisi_class = '';
+                                    $kondisi_text = '';
+                                    switch ($peminjaman['kondisi']) {
+                                        case 'baik': $kondisi_class = 'kondisi-baik'; $kondisi_text = 'Baik'; break;
+                                        case 'rusak_ringan': $kondisi_class = 'kondisi-rusak-ringan'; $kondisi_text = 'Rusak Ringan'; break;
+                                        case 'rusak_berat': $kondisi_class = 'kondisi-rusak-berat'; $kondisi_text = 'Rusak Berat'; break;
+                                        default: $kondisi_class = 'kondisi-baik'; $kondisi_text = 'Baik';
+                                    }
+                                    ?>
+                                    <span class="kondisi-badge <?= $kondisi_class ?>"><?= $kondisi_text ?></span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Tanggal Pengembalian Input</div>
+                                <div class="info-value"><?= date('d F Y H:i', strtotime($peminjaman['tgl_pengembalian_input'])) ?></div>
                             </div>
                         </div>
                         <?php if (!empty($peminjaman['keterangan_pengembalian'])): ?>
-                        <div class="info-row">
+                        <div class="info-item full-width">
                             <div class="info-label">Keterangan Pengembalian</div>
                             <div class="info-value"><?= nl2br(htmlspecialchars($peminjaman['keterangan_pengembalian'])) ?></div>
                         </div>
                         <?php endif; ?>
-                        <div class="info-row">
-                            <div class="info-label">Tanggal Pengembalian Input</div>
-                            <div class="info-value"><?= date('d F Y H:i', strtotime($peminjaman['tgl_pengembalian_input'])) ?></div>
-                        </div>
                     </div>
                 </div>
                 <?php endif; ?>
 
-                <!-- Tombol Kembali -->
-                <div class="back-button">
-                    <a href="../peminjaman" class="btn-back">
-                        <i class="fas fa-arrow-left"></i> Kembali ke Peminjaman Saya
+                <!-- Tombol Aksi -->
+                <div class="action-buttons">
+                    <a href="https://web.craft.co.id/peminjaman" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Kembali
                     </a>
                 </div>
             </div>
@@ -289,156 +307,204 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
 </section>
 
 <style>
-/* Detail Peminjaman */
+/* Detail Peminjaman - Style seperti detail motor */
 .detail-peminjaman {
     padding: 60px 0;
     background: #f8fafc;
 }
 
-/* Status Card */
-.status-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: white;
+/* Header Card */
+.detail-header-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    padding: 30px;
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
 }
 
-.status-icon {
+.detail-header-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+.header-icon {
     width: 70px;
     height: 70px;
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(5px);
 }
 
-.status-card.status-pending .status-icon {
-    background: #fef3c7;
-    color: #92400e;
-}
-.status-card.status-disetujui .status-icon {
-    background: #dbeafe;
-    color: #1e40af;
-}
-.status-card.status-dipinjam .status-icon {
-    background: #d1fae5;
-    color: #065f46;
-}
-.status-card.status-selesai .status-icon {
-    background: #d1fae5;
-    color: #065f46;
-}
-.status-card.status-ditolak .status-icon {
-    background: #fee2e2;
-    color: #991b1b;
+.header-icon i {
+    font-size: 32px;
 }
 
-.status-info h3 {
-    font-size: 1.3rem;
-    margin-bottom: 5px;
+.detail-header-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
-.status-info p {
-    color: #718096;
-    margin: 0;
+.header-badge {
+    display: inline-block;
 }
 
-/* Detail Card */
-.detail-card {
-    background: white;
-    border-radius: 20px;
-    margin-bottom: 25px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
-
-.detail-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 15px 25px;
-    color: white;
-}
-
-.detail-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.detail-header h3 i {
-    margin-right: 10px;
-}
-
-.detail-body {
-    padding: 20px 25px;
-}
-
-.info-row {
-    display: flex;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f2f5;
-}
-
-.info-row:last-child {
-    border-bottom: none;
-}
-
-.info-label {
-    width: 180px;
+.status-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #4a5568;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
 }
 
-.info-value {
-    flex: 1;
+/* Info Card */
+.info-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.info-card-header {
+    background: #f8fafc;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eef2f6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card-header i {
+    font-size: 1.2rem;
+    color: #667eea;
+}
+
+.info-card-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
     color: #2d3748;
 }
 
-.total-row {
-    background: #f0fff4;
-    margin-top: 5px;
-    padding: 12px 0;
-    border-radius: 10px;
+.info-card-body {
+    padding: 20px;
 }
 
-.total-price {
-    font-size: 1.2rem;
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.info-item {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 12px 15px;
+    transition: all 0.2s;
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-item.full-width {
+    grid-column: span 2;
+}
+
+.info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.info-value.price {
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+.info-value.denda {
+    color: #e53e3e;
+    font-weight: 600;
+}
+
+.total {
+    background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+    border: 1px solid #c6f6d5;
+}
+
+.total .info-value {
+    font-size: 1.1rem;
     font-weight: 700;
     color: #38a169;
 }
 
 /* Status Badge */
-.status-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    display: inline-block;
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
 }
-.status-pending { background: #fef3c7; color: #92400e; }
-.status-disetujui { background: #dbeafe; color: #1e40af; }
-.status-dipinjam { background: #d1fae5; color: #065f46; }
-.status-selesai { background: #d1fae5; color: #065f46; }
-.status-ditolak { background: #fee2e2; color: #991b1b; }
+.status-disetujui {
+    background: #dbeafe;
+    color: #1e40af;
+}
+.status-dipinjam {
+    background: #d1fae5;
+    color: #065f46;
+}
+.status-selesai {
+    background: #d1fae5;
+    color: #065f46;
+}
+.status-ditolak {
+    background: #fee2e2;
+    color: #991b1b;
+}
 
 /* Kondisi Badge */
 .kondisi-badge {
+    display: inline-block;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.7rem;
     font-weight: 600;
-    display: inline-block;
 }
 .kondisi-baik { background: #d1fae5; color: #065f46; }
 .kondisi-rusak-ringan { background: #fef3c7; color: #92400e; }
 .kondisi-rusak-berat { background: #fee2e2; color: #991b1b; }
 
-/* Back Button */
-.back-button {
-    text-align: center;
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
@@ -449,7 +515,7 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     color: #4a5568;
-    padding: 12px 25px;
+    padding: 12px 30px;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
@@ -463,22 +529,24 @@ $total_bayar = ($peminjaman['total_harga'] ?? 0) + ($peminjaman['denda'] ?? 0);
 
 /* Responsive */
 @media (max-width: 768px) {
-    .status-card {
-        flex-direction: column;
-        text-align: center;
+    .info-grid {
+        grid-template-columns: 1fr;
     }
-    .info-row {
-        flex-direction: column;
+    
+    .info-item.full-width {
+        grid-column: span 1;
     }
-    .info-label {
-        width: 100%;
-        margin-bottom: 5px;
+    
+    .detail-header-card {
+        padding: 20px;
     }
-    .detail-header {
-        padding: 12px 20px;
+    
+    .detail-header-card h2 {
+        font-size: 1.2rem;
     }
-    .detail-body {
-        padding: 15px 20px;
+    
+    .info-card-body {
+        padding: 15px;
     }
 }
 </style>

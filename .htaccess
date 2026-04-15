@@ -1,6 +1,6 @@
 Options +FollowSymLinks
 RewriteEngine On
-RewriteBase /chriss-ukk/
+RewriteBase web.craft.co.id
 
 # ============================================
 # FRONTEND ROUTING
@@ -32,7 +32,15 @@ RewriteRule ^detail-motor/([a-zA-Z0-9_-]+)$ frontend/sections/motor_detail.php?s
 
 # Peminjaman (Hanya untuk user login)
 RewriteRule ^peminjaman$ frontend/sections/peminjaman.php [L,QSA]
+
+# Detail Peminjaman - INI YANG PENTING
 RewriteRule ^detail-peminjaman/([a-zA-Z0-9_-]+)$ frontend/sections/peminjaman_detail.php?slug=$1 [L,QSA]
+
+# Peminjaman 
+RewriteRule ^syarat-ketentuan$ frontend/sections/syarat_ketentuan.php [L,QSA]
+RewriteRule ^kebijakan-privasi$ frontend/sections/kebijakan_privasi.php [L,QSA]
+RewriteRule ^faq$ frontend/sections/faq.php [L,QSA]
+RewriteRule ^cara-peminjaman$ frontend/sections/cara_peminjaman.php [L,QSA]
 
 # ============================================
 # AUTH (Login/Register)

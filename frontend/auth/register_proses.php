@@ -7,8 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die("Akses tidak valid!");
 }
 
-// Ambil data dari form
-$id = isset($_POST['id']) ? (int)escapeString($_POST['id']) : 0;
+// Ambil data dari form (HAPUS bagian ID)
 $username = escapeString($_POST['username']);
 $nama_lengkap = escapeString($_POST['nama_lengkap']);
 $email = escapeString($_POST['email'] ?? '');
@@ -20,11 +19,6 @@ $role = 'peminjam'; // Default role untuk registrasi
 
 // Validasi input
 $errors = [];
-
-// Validasi ID
-if ($id <= 0) {
-    $errors[] = "ID harus diisi dan harus angka positif.";
-}
 
 // Validasi username
 if (empty($username)) {
@@ -56,46 +50,28 @@ if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if (!empty($errors)) {
     $_SESSION['register_errors'] = $errors;
     $_SESSION['register_data'] = [
-        'id' => $id,
         'username' => $username,
         'nama_lengkap' => $nama_lengkap,
         'email' => $email,
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: register");
+    header("Location: https://web.craft.co.id/register");
     exit;
 }
 
-// Cek apakah ID sudah digunakan di tabel users
-$checkId = mysqli_query($connect, "SELECT * FROM users WHERE id = $id");
-if (mysqli_num_rows($checkId) > 0) {
-    $_SESSION['register_errors'] = ["ID $id sudah digunakan, silakan pilih ID lain."];
-    $_SESSION['register_data'] = [
-        'id' => $id,
-        'username' => $username,
-        'nama_lengkap' => $nama_lengkap,
-        'email' => $email,
-        'no_telp' => $no_telp,
-        'alamat' => $alamat
-    ];
-    header("Location: register");
-    exit;
-}
-
-// Cek apakah username sudah digunakan di tabel users
+// Cek apakah username sudah digunakan
 $checkUsername = mysqli_query($connect, "SELECT * FROM users WHERE username = '$username'");
 if (mysqli_num_rows($checkUsername) > 0) {
     $_SESSION['register_errors'] = ["Username '$username' sudah digunakan, silakan pilih username lain."];
     $_SESSION['register_data'] = [
-        'id' => $id,
         'username' => $username,
         'nama_lengkap' => $nama_lengkap,
         'email' => $email,
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: register");
+    header("Location: https://web.craft.co.id/register");
     exit;
 }
 
@@ -105,14 +81,13 @@ if (!empty($email)) {
     if (mysqli_num_rows($checkEmail) > 0) {
         $_SESSION['register_errors'] = ["Email '$email' sudah digunakan, silakan gunakan email lain."];
         $_SESSION['register_data'] = [
-            'id' => $id,
             'username' => $username,
             'nama_lengkap' => $nama_lengkap,
             'email' => $email,
             'no_telp' => $no_telp,
             'alamat' => $alamat
         ];
-        header("Location: register");
+        header("Location: https://web.craft.co.id/register");
         exit;
     }
 }
@@ -120,25 +95,24 @@ if (!empty($email)) {
 // Hash password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-// Query insert ke tabel users
-$qInsert = "INSERT INTO users (id, username, nama_lengkap, email, no_telp, alamat, password, role, created_at) 
-            VALUES ($id, '$username', '$nama_lengkap', '$email', '$no_telp', '$alamat', '$hashed_password', '$role', NOW())";
+// Query insert ke tabel users (HAPUS kolom id, biar auto increment)
+$qInsert = "INSERT INTO users (username, nama_lengkap, email, no_telp, alamat, password, role, created_at) 
+            VALUES ('$username', '$nama_lengkap', '$email', '$no_telp', '$alamat', '$hashed_password', '$role', NOW())";
 
 if (mysqli_query($connect, $qInsert)) {
     $_SESSION['register_success'] = "Registrasi berhasil! Silakan login dengan username '$username'.";
-    header("Location: ../login");
+    header("Location: https://web.craft.co.id/login");
     exit;
 } else {
     $_SESSION['register_errors'] = ["Gagal melakukan registrasi: " . mysqli_error($connect)];
     $_SESSION['register_data'] = [
-        'id' => $id,
         'username' => $username,
         'nama_lengkap' => $nama_lengkap,
         'email' => $email,
         'no_telp' => $no_telp,
         'alamat' => $alamat
     ];
-    header("Location: register");
+    header("Location: https://web.craft.co.id/register");
     exit;
 }
 ?>

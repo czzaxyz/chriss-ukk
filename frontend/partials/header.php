@@ -11,8 +11,8 @@
     <title>Sistem Peminjaman Motor</title>
 
     <!-- Latest Bootstrap min CSS -->
-    <link rel="stylesheet" href="frontend/templates/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="frontend/templates/assets/img/favicon.png" />
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="https://web.craft.co.id/frontend/templates/assets/img/favicon.png" />
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
@@ -20,24 +20,24 @@
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="frontend/templates/assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="frontend/templates/assets/fonts/themify-icons.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/fonts/themify-icons.css">
 
     <!-- Owl carousel Css -->
-    <link rel="stylesheet" href="frontend/templates/assets/owlcarousel/css/owl.carousel.css">
-    <link rel="stylesheet" href="frontend/templates/assets/owlcarousel/css/owl.theme.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/owlcarousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/owlcarousel/css/owl.theme.css">
 
     <!-- jQuery simple mobilemenu Css -->
-    <link rel="stylesheet" href="frontend/templates/assets/css/jquery-simple-mobilemenu.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/css/jquery-simple-mobilemenu.css">
 
     <!-- Magnific CSS -->
-    <link rel="stylesheet" href="frontend/templates/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/css/magnific-popup.css">
 
     <!-- Animate CSS -->
-    <link rel="stylesheet" href="frontend/templates/assets/css/animate.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/css/animate.css">
 
     <!-- Style CSS -->
-    <link rel="stylesheet" href="frontend/templates/assets/css/style.css">
+    <link rel="stylesheet" href="https://web.craft.co.id/frontend/templates/assets/css/style.css">
 </head>
 
 <body data-spy="scroll" data-offset="80">
@@ -54,7 +54,7 @@
 
     // Cek login
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
-        header("Location: ../../chriss-ukk/login");
+        header("Location: ../../login");
         exit();
     }
     ?>

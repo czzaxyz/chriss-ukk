@@ -12,243 +12,342 @@ $query_motor = mysqli_query($connect, "SELECT b.*, k.nama_kategori
 ?>
 
 <!-- START MOTOR TERBARU -->
-<section class="home_course section-padding">
+<section class="motor-terbaru section-padding">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="section-title">
-                    <span class="subtitle">MOTOR TERBARU</span>
-                    <h2>Pilihan Motor <span>Terbaik</span> untuk Perjalanan Anda</h2>
-                    <p>Dapatkan motor impian dengan harga terbaik dan kondisi terawat</p>
-                </div>
-            </div>
-        </div><!--- END ROW -->
-        
-        <div class="row">
+        <div class="section-header text-center">
+            <span class="badge-section">🔥 HOT DEALS</span>
+            <h2>Motor <span class="highlight">Terbaru</span> & Terpopuler</h2>
+            <p>Dapatkan pengalaman berkendara terbaik dengan motor-motor pilihan kami</p>
+        </div>
+
+        <div class="motor-grid">
             <?php if (mysqli_num_rows($query_motor) > 0): ?>
                 <?php while ($motor = mysqli_fetch_assoc($query_motor)): ?>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="single_course">
-                            <div class="single_c_img">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaTv8EpZfudmW9qVbWoaEFkDa4A0enXrI02w&s" class="img-fluid" alt="<?= htmlspecialchars($motor['nama_barang']) ?>">
-                                <span class="category-badge"><?= htmlspecialchars($motor['nama_kategori']) ?></span>
+                    <div class="motor-card">
+                        <div class="motor-card-inner">
+                            <div class="motor-image">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaTv8EpZfudmW9qVbWoaEFkDa4A0enXrI02w&s" alt="<?= htmlspecialchars($motor['nama_barang']) ?>">
+                                <div class="motor-badge">
+                                    <span class="badge-category"><?= htmlspecialchars($motor['nama_kategori']) ?></span>
+                                    <?php if ($motor['stok'] <= 3): ?>
+                                        <span class="badge-stock limited">Stok Terbatas</span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="motor-overlay">
+                                    <a href="detail-motor/<?= $motor['slug'] ?>" class="btn-overlay">
+                                        <i class="fas fa-eye"></i> Lihat Detail
+                                    </a>
+                                </div>
                             </div>
-                            <div class="motor-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-alt"></i>
-                                <span>(4.9)</span>
+                            <div class="motor-content">
+                                <div class="motor-header">
+                                    <h3><?= htmlspecialchars($motor['nama_barang']) ?></h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                </div>
+                                <div class="motor-spec">
+                                    <div class="spec-item">
+                                        <i class="fas fa-trademark"></i>
+                                        <span><?= htmlspecialchars($motor['merk'] ?? 'Umum') ?></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span><?= $motor['tahun'] ?? '-' ?></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fas fa-box"></i>
+                                        <span>Stok: <?= $motor['stok'] ?> unit</span>
+                                    </div>
+                                </div>
+                                <a href="detail-motor/<?= $motor['slug'] ?>" class="btn-rent-now">
+                                    <span>Sewa Sekarang</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
                             </div>
-                            <h4><a href="motor_detail.php?id=<?= $motor['id'] ?>"><?= htmlspecialchars($motor['nama_barang']) ?></a></h4>
-                            <div class="motor-specs">
-                                <p><i class="fas fa-trademark"></i> <?= htmlspecialchars($motor['merk'] ?? 'Umum') ?></p>
-                                <p><i class="fas fa-calendar-alt"></i> <?= $motor['tahun'] ?? '-' ?></p>
-                                <p><i class="fas fa-boxes"></i> Stok: <?= $motor['stok'] ?> unit</p>
-                            </div>
-                            <div class="price">
-                                Rp <?= number_format($motor['harga_sewa_perhari'], 0, ',', '.') ?>
-                                <span>/hari</span>
-                            </div>
-                            <a href="frontend/sections/motor_detail.php?id=<?= $motor['id'] ?>" class="btn-rent">
-                                <i class="fas fa-motorcycle"></i> Sewa Sekarang
-                            </a>
                         </div>
-                    </div><!-- END COL -->
+                    </div>
                 <?php endwhile; ?>
             <?php else: ?>
-                <div class="col-12 text-center">
-                    <div class="alert alert-info">Belum ada motor tersedia</div>
+                <div class="empty-state">
+                    <i class="fas fa-motorcycle"></i>
+                    <h4>Belum Ada Motor Tersedia</h4>
+                    <p>Silakan cek kembali nanti</p>
                 </div>
             <?php endif; ?>
-    </div><!--- END CONTAINER -->
+        </div>
+    </div>
 </section>
-<!-- END MOTOR TERBARU -->
- <style>
-	/* ============================================
-   MOTOR TERBARU SECTION STYLE
+
+<style>
+/* ============================================
+   MOTOR TERBARU SECTION - MODERN STYLE
    ============================================ */
 
-.home_course {
+.motor-terbaru {
     padding: 80px 0;
-    background: #f8fafc;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
 }
 
-.section-title {
+.section-header {
     margin-bottom: 50px;
 }
 
-.section-title .subtitle {
+.badge-section {
     display: inline-block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 5px 20px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    padding: 6px 20px;
     border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.7rem;
+    font-weight: 700;
     color: white;
-    margin-bottom: 15px;
     letter-spacing: 1px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3);
 }
 
-.section-title h2 {
+.section-header h2 {
     font-size: 2.2rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #1a202c;
     margin-bottom: 15px;
 }
 
-.section-title h2 span {
-    color: #667eea;
+.section-header h2 .highlight {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.section-title p {
+.section-header p {
     font-size: 1rem;
     color: #718096;
     max-width: 600px;
     margin: 0 auto;
 }
 
-/* Single Motor Card */
-.single_course {
+/* Motor Grid */
+.motor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Motor Card */
+.motor-card {
     background: white;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
 }
 
-.single_course:hover {
+.motor-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.single_c_img {
+.motor-card-inner {
+    position: relative;
+}
+
+/* Motor Image */
+.motor-image {
     position: relative;
     overflow: hidden;
+    height: 240px;
 }
 
-.single_c_img img {
+.motor-image img {
     width: 100%;
-    height: 220px;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
-.single_course:hover .single_c_img img {
-    transform: scale(1.05);
+.motor-card:hover .motor-image img {
+    transform: scale(1.1);
 }
 
-.category-badge {
+.motor-badge {
     position: absolute;
     top: 15px;
     left: 15px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.badge-category {
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    padding: 5px 15px;
-    border-radius: 30px;
+    padding: 4px 12px;
+    border-radius: 20px;
     font-size: 0.7rem;
     font-weight: 600;
 }
 
-/* Motor Rating */
-.motor-rating {
-    padding: 15px 20px 5px;
+.badge-stock {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 600;
 }
 
-.motor-rating i {
-    color: #fbbf24;
-    font-size: 0.8rem;
-    margin-right: 2px;
+.badge-stock.limited {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
-.motor-rating span {
-    color: #718096;
-    font-size: 0.7rem;
-    margin-left: 5px;
-}
-
-/* Motor Title */
-.single_course h4 {
-    padding: 0 20px;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.single_course h4 a {
-    color: #2d3748;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.single_course h4 a:hover {
-    color: #667eea;
-}
-
-/* Motor Specs */
-.motor-specs {
-    padding: 0 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.motor-specs p {
-    font-size: 0.75rem;
-    color: #718096;
-    margin: 0;
+/* Overlay */
+.motor-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.motor-specs i {
+.motor-card:hover .motor-overlay {
+    opacity: 1;
+}
+
+.btn-overlay {
+    background: white;
     color: #667eea;
-    width: 14px;
-}
-
-/* Price */
-.price {
     padding: 10px 20px;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #667eea;
-    border-top: 1px solid #eef2f6;
-    margin-top: 10px;
-}
-
-.price span {
-    font-size: 0.7rem;
-    font-weight: normal;
-    color: #a0aec0;
-}
-
-/* Button Rent */
-.btn-rent {
-    display: block;
-    margin: 15px 20px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 50px;
+    border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.85rem;
     transition: all 0.3s;
 }
 
-.btn-rent:hover {
-    transform: translateY(-2px);
+.btn-overlay:hover {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Motor Content */
+.motor-content {
+    padding: 20px;
+}
+
+.motor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.motor-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.rating i {
+    font-size: 0.7rem;
+    color: #fbbf24;
+}
+
+.rating span {
+    font-size: 0.7rem;
+    color: #718096;
+    margin-left: 4px;
+}
+
+/* Motor Spec */
+.motor-spec {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    color: #718096;
+}
+
+.spec-item i {
+    color: #667eea;
+    font-size: 0.7rem;
+}
+
+/* Motor Price */
+.motor-price {
+    margin-bottom: 15px;
+}
+
+.price-label {
+    font-size: 0.65rem;
+    color: #a0aec0;
+    display: block;
+}
+
+.price-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #667eea;
+}
+
+.per-day {
+    font-size: 0.7rem;
+    font-weight: normal;
+    color: #a0aec0;
+}
+
+/* Button Rent */
+.btn-rent-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    margin-top: 5px;
+}
+
+.btn-rent-now:hover {
+    gap: 15px;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     color: white;
 }
 
-/* Button View All */
-.btn-view-all {
+/* View More Button */
+.btn-view-more {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -262,29 +361,69 @@ $query_motor = mysqli_query($connect, "SELECT b.*, k.nama_kategori
     transition: all 0.3s;
 }
 
-.btn-view-all:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.btn-view-more:hover {
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
+    gap: 15px;
     border-color: transparent;
-    transform: translateY(-2px);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.empty-state h4 {
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin-bottom: 10px;
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .motor-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
-    .home_course {
+    .motor-terbaru {
         padding: 50px 0;
     }
     
-    .section-title h2 {
+    .section-header h2 {
         font-size: 1.6rem;
     }
     
-    .single_c_img img {
-        height: 180px;
+    .motor-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
-    .motor-specs {
+    .motor-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .motor-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .motor-spec {
+        flex-wrap: wrap;
         gap: 10px;
     }
-}	
- </style>
+}
+</style>

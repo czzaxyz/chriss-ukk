@@ -16,29 +16,29 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
         <div class="row">
             <div class="col-20 align-self-center">
                 <div class="site-logo">
-                    <a href="./"><img src="frontend/templates/assets/img/logo.png" alt="Logo"></a>
+                    <a href="https://web.craft.co.id"><img src="https://web.craft.co.id/frontend/templates/assets/img/logo.png" alt="Logo"></a>
                 </div>
             </div><!--- END Col -->
 
             <div class="col-60 d-flex">
                 <nav id="main-menu">
                     <ul>
-                        <li><a href="./">Home</a></li>
-                        <li><a href="./about">About</a></li>
+                        <li><a href="https://web.craft.co.id/">Home</a></li>
+                        <li><a href="https://web.craft.co.id/about">About</a></li>
                         <li class="menu-item-has-children"><a href="#">Motor</a>
                             <ul>
-                                <li><a href="motor?kategori=matic">Matic</a></li>
-                                <li><a href="motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
-                                <li><a href="motor?kategori=sport">Sport</a></li>
-                                <li><a href="motor?kategori=bebek">Bebek</a></li>
-                                <li><a href="motor?kategori=skuter">Skuter</a></li>
-                                <li><a href="motor?kategori=classic">Classic</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=matic">Matic</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=sport">Sport</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=bebek">Bebek</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=skuter">Skuter</a></li>
+                                <li><a href="https://web.craft.co.id/motor?kategori=classic">Classic</a></li>
                             </ul>
                         </li>
                         <?php if ($isLoggedIn): ?>
-                            <li><a href="peminjaman">Peminjaman Saya</a></li>
+                            <li><a href="https://web.craft.co.id/peminjaman">Peminjaman</a></li>
                         <?php endif; ?>
-                        <li><a href="contact">Contact</a></li>
+                        <li><a href="https://web.craft.co.id/contact">Contact</a></li>
                     </ul>
                 </nav>
             </div><!--- END Col -->
@@ -50,39 +50,39 @@ $role = $isLoggedIn ? $_SESSION['role'] : '';
                         <span class="header-btn">
                             <i class="fa fa-user-circle"></i> Halo, <?= htmlspecialchars($username) ?>
                         </span>
-                        <a href="logout" class="btn_one btn-logout">
+                        <a href="https://web.craft.co.id/logout" class="btn_one btn-logout">
                             <i class="fa fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
                 <?php else: ?>
                     <!-- Tampilan ketika belum login -->
-                    <a href="login" class="header-btn">Sign In</a>
-                    <a href="register" class="btn_one">Sign Up</a>
+                    <a href="https://web.craft.co.id/login" class="header-btn">Sign In</a>
+                    <a href="https://web.craft.co.id/register" class="btn_one">Sign Up</a>
                 <?php endif; ?>
             </div><!--- END Col -->
 
             <ul class="mobile_menu">
-                <li><a href="./">Home</a></li>
-                <li><a href="about">About</a></li>
+                <li><a href="https://web.craft.co.id/">Home</a></li>
+                <li><a href="https://web.craft.co.id/about">About</a></li>
                 <li class="menu-item-has-children"><a href="#">Motor</a>
                     <ul>
-                        <li><a href="motor?kategori=matic">Matic</a></li>
-                        <li><a href="motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
-                        <li><a href="motor?kategori=sport">Sport</a></li>
-                        <li><a href="motor?kategori=bebek">Bebek</a></li>
-                        <li><a href="motor?kategori=skuter">Skuter</a></li>
-                        <li><a href="motor?kategori=classic">Classic</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=matic">Matic</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=trail%2Foffroad">Trail/Offroad</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=sport">Sport</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=bebek">Bebek</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=skuter">Skuter</a></li>
+                        <li><a href="https://web.craft.co.id/motor?kategori=classic">Classic</a></li>
                     </ul>
                 </li>
                 <?php if ($isLoggedIn): ?>
-                    <li><a href="peminjaman">Peminjaman Saya</a></li>
+                    <li><a href="https://web.craft.co.id/peminjaman">Peminjaman</a></li>
                 <?php endif; ?>
-                <li><a href="contact">Contact</a></li>
+                <li><a href="https://web.craft.co.id/contact">Contact</a></li>
                 <?php if ($isLoggedIn): ?>
-                    <li><a href="logout">Logout</a></li>
+                    <li><a href="https://web.craft.co.id/logout">Logout</a></li>
                 <?php else: ?>
-                    <li><a href="login.php">Sign In</a></li>
-                    <li><a href="register.php">Sign Up</a></li>
+                    <li><a href="https://web.craft.co.id/login.php">Sign In</a></li>
+                    <li><a href="https://web.craft.co.id/register.php">Sign Up</a></li>
                 <?php endif; ?>
             </ul>
         </div><!--- END ROW -->

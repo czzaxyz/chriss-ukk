@@ -87,42 +87,42 @@
                             <div class="dropdown-header">Pilih Kategori Motor</div>
 
                             <!-- Matic -->
-                            <a href="motor.php?kategori=matic">
+                            <a href="motor?kategori=matic">
                                 <i class="fas fa-motorcycle"></i>
                                 <span>Motor Matic</span>
                                 <small>Matic terbaru & irit</small>
                             </a>
 
                             <!-- Trail/Offroad -->
-                            <a href="motor.php?kategori=trail%2Foffroad">
+                            <a href="motor?kategori=trail%2Foffroad">
                                 <i class="fas fa-mountain"></i>
                                 <span>Motor Trail/Offroad</span>
                                 <small>Untuk medan berat & offroad</small>
                             </a>
 
                             <!-- Sport -->
-                            <a href="motor.php?kategori=sport">
+                            <a href="motor?kategori=sport">
                                 <i class="fas fa-bolt"></i>
                                 <span>Motor Sport</span>
                                 <small>Performa tinggi & bertenaga</small>
                             </a>
 
                             <!-- Bebek -->
-                            <a href="motor.php?kategori=bebek">
+                            <a href="motor?kategori=bebek">
                                 <i class="fas fa-tachometer-alt"></i>
                                 <span>Motor Bebek</span>
                                 <small>Irit bahan bakar</small>
                             </a>
 
                             <!-- Skuter -->
-                            <a href="motor.php?kategori=skuter">
+                            <a href="motor?kategori=skuter">
                                 <i class="fas fa-motorcycle"></i>
                                 <span>Motor Skuter</span>
                                 <small>Bagasi luas & nyaman</small>
                             </a>
 
                             <!-- Classic -->
-                            <a href="motor.php?kategori=classic">
+                            <a href="motor?kategori=classic">
                                 <i class="fas fa-crown"></i>
                                 <span>Motor Classic</span>
                                 <small>Desain vintage & klasik</small>
